@@ -16,7 +16,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\"name\": \"Nathan\", \"email\": \"nathan@example.com\", \"password\": \"password123\"}"
+                    "raw": "{\"firstname\": \"Nathan\", \"lastname\": \"Doe\", \"email\": \"nathan@example.com\", \"password\": \"password123\", \"phone\": \"0612345678\", \"birthdate\": \"1990-01-01\", \"profil_shrek_character\": 1}"
                 },
                 "url": {
                     "raw": "http://localhost:5000/api/users/register",

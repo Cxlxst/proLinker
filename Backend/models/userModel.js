@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
   phone: { type: String, required: true, length: 10 },
   email: { type: String, required: true, unique: true },
   birthdate: { type: Date, required: true },
-  profil_shrek_character: { type: String, required: false },
+  profil_shrek_character: { type: Number, required: false, default: 1 },
 }, { timestamps: true });
 
 userSchema.pre('save', async function (next) {
