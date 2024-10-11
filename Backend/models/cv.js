@@ -14,5 +14,5 @@ const cvSchema = mongoose.Schema({
     job_type_id: { type: mongoose.Schema.Types.ObjectId, ref: 'JobType', required: true }
 }, { timestamps: true });
 
-const Cv = mongoose.model('Cv', cvSchema);
+const Cv = mongoose.model('cv', cvSchema);
 module.exports = Cv;

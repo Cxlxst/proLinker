@@ -5,5 +5,5 @@ const cvUserSchema = mongoose.Schema({
     id_user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 }, { timestamps: true });
 
-const CvUser = mongoose.model('CvUser', cvUserSchema);
+const CvUser = mongoose.model('cv_user', cvUserSchema);
 module.exports = CvUser;

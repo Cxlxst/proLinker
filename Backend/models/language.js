@@ -7,5 +7,5 @@ const cvLanguageSchema = mongoose.Schema({
     id_level: { type: mongoose.Schema.Types.ObjectId, ref: 'Level', required: true }
 }, { timestamps: true });
 
-const CvLanguage = mongoose.model('CvLanguage', cvLanguageSchema);
+const CvLanguage = mongoose.model('cv_language', cvLanguageSchema);
 module.exports = CvLanguage;
