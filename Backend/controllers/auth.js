@@ -16,7 +16,7 @@ const createUser = async (req, res) => {
     const user = await User.create(req.body);
     res.status(201).json({ _id: user._id, name: user.name, email: user.email, token: generateToken(user._id) });
   } catch (error) {
-    res.status(500).json({ message: 'Erreur serveur' });
+    res.status(500).json({ message: 'Erreur serveur', error });
   }
 };
 
