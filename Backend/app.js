@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const apiRouter = require('./routes');
+const { initializeBdd } = require('./initialize')
 
 dotenv.config();
 
@@ -9,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB connecté'))
+    .then(async () => { await initializeBdd(); console.log('MongoDB connecté') })
     .catch((error) => console.error(`Erreur de connexion à MongoDB : ${error.message}`));
 
 // Recuperation des definitions de routes

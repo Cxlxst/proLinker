@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "7f717250-272b-4fc2-97f1-5eb7c7b9b61d",
+		"name": "Prolinker API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35174540"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstname\": \"Nathan\", \"lastname\": \"Samochval\", \"email\": \"nathan@example.com\", \"password\": \"password123\", \"phone\": \"0123456789\", \"birthdate\": \"2003-11-02\"}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"nathan@example.com\", \"password\": \"password123\"}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CVs",
+			"item": [
+				{
+					"name": "Create CV",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"region\": \"Île-de-France\",\r\n    \"city\": \"Paris\",\r\n    \"visibility\": true,\r\n    \"hard_skill\": [\r\n        \"JavaScript\",\r\n        \"Node.js\"\r\n    ],\r\n    \"soft_skill\": [\r\n        \"Communication\"\r\n    ],\r\n    \"profil\": \"Développeur Web\",\r\n    \"job_type_name\": \"CDI\",\r\n    \"languages\": [\r\n        {\r\n            \"name\": \"Français\",\r\n            \"level_name\": \"Avancé\"\r\n        },\r\n        {\r\n            \"name\": \"Anglais\",\r\n            \"level_name\": \"Intermédiaire\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/cvs/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cvs",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CVs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/cvs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cvs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CV by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/cvs/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cvs",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CV",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"region\": \"Nouvelle-Aquitaine\", \"city\": \"Bordeaux\", \"visibility\": false, \"hard_skill\": [\"Python\", \"Django\"], \"job_type_name\": \"CDD\", \"languages\": [{\"name\": \"Espagnol\", \"level_name\": \"Débutant\"}]}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/cvs/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cvs",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete CV",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/cvs/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cvs",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Job Types",
+			"item": [
+				{
+					"name": "Get Job Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/job_types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"job_types"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Languages",
+			"item": [
+				{
+					"name": "Get Cv Language",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/languages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"languages"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Levels",
+			"item": [
+				{
+					"name": "Get Level",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/levels",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"levels"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

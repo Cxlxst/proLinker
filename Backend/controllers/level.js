@@ -11,7 +11,6 @@ const getLevels = async (req, res) => {
 
 const createLevel = async (req, res) => {
     const { id_level, name } = req.body;
-
     try {
         const newLevel = new Level({
             id_level,
@@ -28,7 +27,6 @@ const createLevel = async (req, res) => {
 const updateLevel = async (req, res) => {
     const { id } = req.params;
     const { id_level, name } = req.body;
-
     try {
         const updatedLevel = await Level.findByIdAndUpdate(id, { id_level, name }, { new: true });
         if (!updatedLevel) {
@@ -42,7 +40,6 @@ const updateLevel = async (req, res) => {
 
 const deleteLevel = async (req, res) => {
     const { id } = req.params;
-
     try {
         const deletedLevel = await Level.findByIdAndDelete(id);
         if (!deletedLevel) {

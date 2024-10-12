@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const cvSchema = mongoose.Schema({
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user', require: true },
     region: { type: String, required: true },
     city: { type: String, required: true },
     visibility: { type: Boolean, default: true },
@@ -10,8 +11,7 @@ const cvSchema = mongoose.Schema({
     soft_skill: { type: [String], required: true },
     hobbies: { type: String },
     profil: { type: String },
-    id_language: { type: Number, required: true },
-    job_type_id: { type: mongoose.Schema.Types.ObjectId, ref: 'JobType', required: true }
+    job_type_id: { type: mongoose.Schema.Types.ObjectId, ref: 'job_type', required: true }
 }, { timestamps: true });
 
 const Cv = mongoose.model('cv', cvSchema);

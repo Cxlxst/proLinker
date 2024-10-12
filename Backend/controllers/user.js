@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
+const User = require('../models/user');
 
 // Récupère tous les utilisateurs
 const getUsers = async (req, res) => {

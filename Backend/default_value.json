@@ -1,0 +1,33 @@
+{
+    "job_type": [
+        {
+            "name": "CDI"
+        },
+        {
+            "name": "CDD"
+        },
+        {
+            "name": "Alternance"
+        },
+        {
+            "name": "Stage"
+        },
+        {
+            "name": "Freelance"
+        }
+    ],
+    "level": [
+        {
+            "name": "Débutant"
+        },
+        {
+            "name": "Intermédiaire"
+        },
+        {
+            "name": "Avancé"
+        },
+        {
+            "name": "Expert"
+        }
+    ]
+}
