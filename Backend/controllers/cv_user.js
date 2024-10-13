@@ -12,7 +12,8 @@ const getRecommandations = async (req, res) => {
 };
 
 const addRecommandation = async (req, res) => {
-    const { cvId, userId } = req.body;
+    const cvId = req.params.id;
+    const userId = req.user;
     if (!cvId || !userId) return res.status(400).json({ message: 'Champs manquants' });
   
     try {
@@ -32,7 +33,8 @@ const addRecommandation = async (req, res) => {
 }
 
 const deleteRecommandation = async (req, res) => {
-    const { cvId, userId } = req.body;
+    const cvId = req.params.id;
+    const userId = req.user;
     if (!cvId || !userId) return res.status(400).json({ message: 'Champs manquants' });
   
     try {
@@ -74,7 +76,7 @@ const allRecommandationsFromCv = async (req, res) => {
 
 //tous les CV qu'un user a recommandé
 const allRecommandationsFromUser = async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.user;
     if (!userId) return res.status(400).json({ message: 'User manquant' });
   
     try {
