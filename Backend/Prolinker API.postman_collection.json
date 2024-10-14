@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7f717250-272b-4fc2-97f1-5eb7c7b9b61d",
+		"_postman_id": "d570bc34-9c50-4236-818e-336883c39ee6",
 		"name": "Prolinker API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "35174540"
@@ -11,6 +11,19 @@
 			"item": [
 				{
 					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"bearer\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -24,7 +37,7 @@
 							"raw": "{\"firstname\": \"Nathan\", \"lastname\": \"Samochval\", \"email\": \"nathan@example.com\", \"password\": \"password123\", \"phone\": \"0123456789\", \"birthdate\": \"2003-11-02\"}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/register",
+							"raw": "http://localhost:5000/api/auth/register",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -32,7 +45,7 @@
 							"port": "5000",
 							"path": [
 								"api",
-								"users",
+								"auth",
 								"register"
 							]
 						}
@@ -41,6 +54,19 @@
 				},
 				{
 					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"bearer\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -54,7 +80,7 @@
 							"raw": "{\"email\": \"nathan@example.com\", \"password\": \"password123\"}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/login",
+							"raw": "http://localhost:5000/api/auth/login",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -62,7 +88,7 @@
 							"port": "5000",
 							"path": [
 								"api",
-								"users",
+								"auth",
 								"login"
 							]
 						}
@@ -76,7 +102,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+								"value": "Bearer {{bearer}}"
 							}
 						],
 						"url": {
@@ -101,6 +127,19 @@
 			"item": [
 				{
 					"name": "Create CV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"id_cv\", jsonData._id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -110,7 +149,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+								"value": "Bearer {{bearer}}"
 							}
 						],
 						"body": {
@@ -140,7 +179,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+								"value": "Bearer {{bearer}}"
 							}
 						],
 						"url": {
@@ -165,7 +204,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+								"value": "Bearer {{bearer}}"
 							}
 						],
 						"url": {
@@ -182,7 +221,8 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "{{id_cv}}"
 								}
 							]
 						}
@@ -200,7 +240,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+								"value": "Bearer {{bearer}}"
 							}
 						],
 						"body": {
@@ -221,7 +261,8 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "{{id_cv}}"
 								}
 							]
 						}
@@ -235,7 +276,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
+								"value": "Bearer {{bearer}}"
 							}
 						],
 						"url": {
@@ -252,8 +293,167 @@
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": "{{id_cv}}"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recommandations",
+			"item": [
+				{
+					"name": "Get All Recommandations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{bearer}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/recommandations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"recommandations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Recommandation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{bearer}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/recommandations/add/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"recommandations",
+								"add",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id_cv}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Recommandation",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{bearer}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/recommandations/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"recommandations",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id_cv}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users Recommanding CV",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{bearer}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/recommandations/allrecoFromCv/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"recommandations",
+								"allrecoFromCv",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id_cv}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CVs Recommended by User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{bearer}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/recommandations/allrecoFromUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"recommandations",
+								"allrecoFromUser"
 							]
 						}
 					},
@@ -287,20 +487,15 @@
 			]
 		},
 		{
-			"name": "Languages",
+			"name": "Cv Languages",
 			"item": [
 				{
 					"name": "Get Cv Language",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/api/languages",
+							"raw": "http://localhost:5000/api/cv_languages",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -308,7 +503,32 @@
 							"port": "5000",
 							"path": [
 								"api",
-								"languages"
+								"cv_languages"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Languages",
+			"item": [
+				{
+					"name": "Get Language",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/cv_languages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cv_languages"
 							]
 						}
 					},
@@ -323,12 +543,7 @@
 					"name": "Get Level",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer YOUR_BEARER_TOKEN_HERE"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "http://localhost:5000/api/levels",
 							"protocol": "http",
@@ -345,6 +560,40 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "bearer",
+			"value": "YOUR-TOKEN-BEARER-HERE",
+			"type": "string"
+		},
+		{
+			"key": "id_cv",
+			"value": "YOUR-ID-CV-HERE",
+			"type": "string"
 		}
 	]
 }

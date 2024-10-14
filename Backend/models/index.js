@@ -4,6 +4,7 @@ module.exports = {
     job_type: require('./job_type'),
     cv_language: require('./cv_language'),
     level: require('./level'),
+    language: require('./language'),
     user: require('./user')
   };
   

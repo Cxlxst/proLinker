@@ -29,5 +29,19 @@
         {
             "name": "Expert"
         }
+    ],
+    "language": [
+        {
+            "name": "Français"
+        },
+        {
+            "name": "Anglais"
+        },
+        {
+            "name": "Espagnol"
+        },
+        {
+            "name": "Allemand"
+        }
     ]
 }
