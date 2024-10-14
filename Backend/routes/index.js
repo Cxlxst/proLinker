@@ -7,6 +7,7 @@ const jobTypeRouter = require('./job_type');
 const cvRouter = require('./cv')
 const cv_userRouter = require('./cv_user')
 const languageRouter = require('./language')
+const experienceRouter = require('./experience')
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use('/job_types', jobTypeRouter);
 app.use('/cvs', cvRouter);
 app.use('/recommandations', cv_userRouter)
 app.use('/languages', languageRouter)
+app.use('/experiences', experienceRouter)
 
 module.exports = app;
