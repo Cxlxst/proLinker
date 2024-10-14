@@ -6,12 +6,12 @@ export default function Login(){
                 <div className="column">
                     <div>
                         <label>E-mail</label>
-                        <input/>
+                        <input type="email"/>
                     </div>
 
                     <div>
                         <label>Mot de passe</label>
-                        <input/>
+                        <input type="password"/>
                     </div>
                 </div>
             </div>
