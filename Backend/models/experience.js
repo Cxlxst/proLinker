@@ -7,6 +7,7 @@ const experienceSchema = mongoose.Schema({
     current: { type: Boolean, require: true },
     structureName: { type: String, required: true },
     description: { type: String },
+    cvId: { type: mongoose.Schema.Types.ObjectId, ref: 'CV' }
 }, { timestamps: true });
 
 const Experience = mongoose.model('experience', experienceSchema);
