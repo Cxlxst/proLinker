@@ -6,24 +6,24 @@ export default function Settings(){
                     <div className="row">
                         <div>
                             <label>Prénom</label>
-                            <input type="text" placeholder="John"/>
+                            <input type="text"/>
                         </div>
 
                         <div>
                             <label>Nom</label>
-                            <input type="text" placeholder="Doe"/>
+                            <input type="text"/>
                         </div>
                     </div>
 
                     <div className="row">
                         <div>
                             <label>E-mail</label>
-                            <input type="email" placeholder="john.doe@example.com"/>
+                            <input type="email"/>
                         </div>
 
                         <div>
                             <label>Numéro de téléphone</label>
-                            <input type="tel" placeholder="0123456789"/>
+                            <input type="tel"/>
                         </div>
                     </div>
 
@@ -33,7 +33,7 @@ export default function Settings(){
                             <input type="date"/>
                         </div>
                     </div>
-                    
+
                     <div className="row">
                         <div>
                             <label>Mot de passe actuel</label>
