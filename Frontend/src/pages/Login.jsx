@@ -18,7 +18,7 @@ function Login() {
         try {
           const response = await fetch('http://localhost:5000/api/auth/login', {
             method: 'POST',
-            data: values
+            body: JSON.stringify(values)
           });
           console.log(values);
           if (response.status === 200 || response.status === 201) {
