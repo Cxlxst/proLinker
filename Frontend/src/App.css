@@ -41,10 +41,13 @@ body{
   padding: 0%;
   display: flex;
   flex-direction: column;
-
-  /* font-family: "Inter", sans-serif; */
   background-color: #151515;
   color: #FFFFFF;
+
+  b{
+    color: #E93DC2;
+    font-weight: 800;
+  }
 
   button{
     border: none;
@@ -66,29 +69,33 @@ body{
   }
 }
 
+.mt_50{
+  margin-top: 50px;
+}
+
 .container{
   display: flex;
   justify-content: center;
-}
-
-.column{
-  margin: 50px;
-
-  div{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
   label{
     margin-top: 20px;
     margin-bottom: 5px;
   }
 
+  div{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.column{
+  margin: 50px;
+
   input{
     border: none;
     border-radius: 8px;
-    padding: 10px 5px;
+    padding: 10px 8px;
     width: 300px;
     background-color: #292929;
     color: #FFFFFF;
@@ -107,5 +114,51 @@ body{
     box-shadow: inset 0px 0px 5px 2px rgba(248, 111, 24, 35%);
     
     transition: 0.5s;
+  }
+
+  select{
+    border: #292929;
+    border-right: 16px solid #292929;
+    border-radius: 8px;
+    padding: 10px 8px;
+    width: 400px;
+    background-color: #292929;
+    color: #FFFFFF;
+
+    transition: 0.5s;
+  }
+
+  textarea{
+    border: none;
+    border-radius: 8px;
+    padding: 10px 8px;
+    width: 384px;
+    height: 200px;
+    background-color: #292929;
+    color: #FFFFFF;
+
+    transition: 0.5s;
+  }
+
+  textarea:hover{
+    box-shadow: inset 0px 0px 5px 2px rgba(248, 111, 24, 35%);
+    
+    transition: 0.5s;
+  }
+
+  textarea:focus {
+    outline: none;
+    box-shadow: inset 0px 0px 5px 2px rgba(248, 111, 24, 35%);
+    
+    transition: 0.5s;
+  }
+
+  .row{
+    display: flex;
+    flex-direction: row;
+
+    div{
+      margin: 0px 50px;
+    }
   }
 }
