@@ -4,6 +4,7 @@ const experienceSchema = mongoose.Schema({
     name: { type: String, required: true },
     beginning: { type: Date, required: true },
     end: { type: Date, required: true },
+    current: { type: Boolean, require: true },
     structureName: { type: String, required: true },
     description: { type: String },
 }, { timestamps: true });

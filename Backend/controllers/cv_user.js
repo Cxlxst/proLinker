@@ -1,6 +1,4 @@
-const Cv_user = require('../models/cv_user');
-const Cv = require('../models/cv');
-const User = require('../models/user');
+const { cv: Cv, cv_user: Cv_user, user: User  } = require('../models/index.js')
 
 const getRecommandations = async (req, res) => {
     try {
