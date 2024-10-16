@@ -1,10 +1,21 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 export const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        // Initialisation immédiate avec localStorage
+        const storedUser = localStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
+
+    // useEffect(() => {
+    //     const storedUser = localStorage.getItem('user');
+    //     if (storedUser) {
+    //         setUser(JSON.parse(storedUser));
+    //     }
+    // }, []);
 
     const login = (logInfos) => {
         setUser({ ...logInfos });
@@ -17,15 +28,7 @@ const UserProvider = ({ children }) => {
     };
 
     const getUserInfos = () => {
-        if (user) {
-            return user;
-        } else {
-            const storeUser = localStorage.getItem('user');
-            if (storeUser) {
-                setUser(JSON.parse(storeUser));
-                return storeUser;
-            }
-        }
+        return user;
     };
 
     return <UserContext.Provider value={{ login, getUserInfos, logout }}>{children}</UserContext.Provider>;
