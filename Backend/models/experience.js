@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const experienceSchema = mongoose.Schema({
+    type: { type: String, require: true },
     name: { type: String, required: true },
     beginning: { type: Date, required: true },
     end: { type: Date, required: true },
