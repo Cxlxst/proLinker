@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React, { useState } from "react";
 import { Logo, LogoIcon, Sidebar, SidebarBody, SidebarLink } from "./components/ui/sidebar";
-import {IconSettings, IconUserBolt, IconHome, IconLogout, IconFileCv } from "@tabler/icons-react";
+import {IconSettings, IconUserBolt, IconHome, IconLogout, IconFileCv, IconListSearch } from "@tabler/icons-react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { cn } from "./libs/utils";
 import './App.css'
@@ -12,7 +12,8 @@ import Login from './pages/Login'
 import Settings from './pages/Settings'
 import CreateCv from './pages/CreateCv'
 import EditCv from './pages/EditCv'
-
+import AllCv from './pages/AllCv'
+import Error404 from './pages/404'
 
 
 function App() {
@@ -27,6 +28,13 @@ function App() {
             ),
         },
         {
+          label: "Tous les CV",
+          href: "/liste-cv",
+          icon: (
+              <IconListSearch className="text-white h-5 w-5 flex-shrink-0" />
+          ),
+      },
+        {
             label: "Connexion",
             href: "/connexion",
             icon: (
@@ -35,7 +43,7 @@ function App() {
         },
         {
           label: "Curriculum vitæ",
-          href: "/mon-cv",
+          href: "/modifier-mon-cv",
           icon: (
               <IconFileCv className="text-white h-5 w-5 flex-shrink-0" />
           ),
@@ -96,7 +104,9 @@ function App() {
                         <Route path="/connexion" element={<Login />} />
                         <Route path="/creer-mon-cv" element={<CreateCv />} />
                         <Route path="/modifier-mon-cv" element={<EditCv />} />
+                        <Route path="/liste-cv" element={<AllCv />} />
                         <Route path="/parametres" element={<Settings />} />
+                        <Route path="/404" element={<Error404 />} />
                     </Routes>
                 </div >
             </Router>
