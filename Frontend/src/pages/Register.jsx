@@ -58,36 +58,36 @@ function Register() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="form-group">
                                     <label htmlFor="firstName" className="block mb-1 font-bold">Prénom</label>
-                                    <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="text" name="firstName" />
+                                    <Field className="w-full p-2 text-white rounded outline-none transition hover:ring-2 hover:ring-orange-500 focus:ring-2 focus:ring-orange-500 bg-stone-900" type="text" name="firstName" />
                                     <ErrorMessage className="text-red-500 text-xs" name="firstName" component="div" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="lastName" className="block mb-1 font-bold">Nom</label>
-                                    <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="text" name="lastName" />
+                                    <Field className="w-full p-2 text-white rounded outline-none transition hover:ring-2 hover:ring-orange-500 focus:ring-2 focus:ring-orange-500 bg-stone-900" type="text" name="lastName" />
                                     <ErrorMessage className="text-red-500 text-xs" name="lastName" component="div" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="form-group">
                                     <label htmlFor="email" className="block mb-1 font-bold">E-mail</label>
-                                    <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="email" name="email" />
+                                    <Field className="w-full p-2 text-white rounded outline-none transition hover:ring-2 hover:ring-orange-500 focus:ring-2 focus:ring-orange-500 bg-stone-900" type="email" name="email" />
                                     <ErrorMessage className="text-red-500 text-xs" name="email" component="div" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="phoneNumber" className="block mb-1 font-bold">Numéro de téléphone</label>
-                                    <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="tel" name="phoneNumber" />
+                                    <Field className="w-full p-2 text-white rounded outline-none transition hover:ring-2 hover:ring-orange-500 focus:ring-2 focus:ring-orange-500 bg-stone-900" type="tel" name="phoneNumber" />
                                     <ErrorMessage className="text-red-500 text-xs" name="phoneNumber" component="div" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="form-group">
                                     <label htmlFor="birthDate" className="block mb-1 font-bold">Date de naissance</label>
-                                    <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="date" name="birthDate" />
+                                    <Field className="w-full p-2 text-white rounded outline-none transition hover:ring-2 hover:ring-orange-500 focus:ring-2 focus:ring-orange-500 bg-stone-900" type="date" name="birthDate" />
                                     <ErrorMessage className="text-red-500 text-xs" name="birthDate" component="div" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password" className="block mb-1 font-bold">Mot de passe</label>
-                                    <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="password" name="password" />
+                                    <Field className="w-full p-2 text-white rounded outline-none transition hover:ring-2 hover:ring-orange-500 focus:ring-2 focus:ring-orange-500 bg-stone-900" type="password" name="password" />
                                     <ErrorMessage className="text-red-500 text-xs" name="password" component="div" />
                                 </div>
                             </div>
