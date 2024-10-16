@@ -19,10 +19,10 @@ export default function Home() {
                     Chaque CV a une histoire à raconter.<br /> Aidez-le à trouver son auditoire sur <b>ProLink</b>
                 </p>
             </div>
-            <button onClick={login} className="absolute z-50 cursor-pointer hover:bg-blue-500 hover:text-white p-3 rounded-lg transition duration-300" style={{ top: '50%', left: '45%', transform: 'translate(-50%, -50%)' }} >
+            <button onClick={register} className="absolute z-50 cursor-pointer hover:bg-blue-500 hover:text-white p-3 rounded-lg transition duration-300" style={{ top: '50%', left: '45%', transform: 'translate(-50%, -50%)' }} >
                 M'inscrire
             </button>
-            <button onClick={register} className="absolute z-50 cursor-pointer hover:bg-blue-500 hover:text-white p-3 rounded-lg transition duration-300" style={{ top: '50%', left: '55%', transform: 'translate(-50%, -50%)' }} >
+            <button onClick={login} className="absolute z-50 cursor-pointer hover:bg-blue-500 hover:text-white p-3 rounded-lg transition duration-300" style={{ top: '50%', left: '55%', transform: 'translate(-50%, -50%)' }} >
                 Me connecter
             </button>
         </BackgroundGradientAnimation>

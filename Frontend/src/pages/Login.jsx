@@ -5,76 +5,67 @@ import * as Yup from 'yup';
 import { UserContext } from '../context/userContext.jsx';
 
 function Login() {
-  const navigate = useNavigate();
-  const { login } = useContext(UserContext);
+    const navigate = useNavigate();
+    const { login } = useContext(UserContext);
 
-  return (
-    <Formik
-      initialValues={{
-        email: '',
-        password: ''
-      }}
-      onSubmit={async (values) => {
+    const submitLogin = async (values) => {
         try {
-          const response = await fetch('http://localhost:5000/api/auth/login', {
-            method: 'POST',
-            body: JSON.stringify(values)
-          });
-          console.log(values);
-          if (response.status === 200 || response.status === 201) {
-            const data = await response.json();
-            login(data);
-            navigate('/', { replace: true });
-          }
+            const response = await fetch('http://localhost:5000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                login(data);
+                navigate('/', { replace: true });
+            } else {
+                const errorData = await response.json();
+                console.error('Échec de la connexion:', errorData);
+                alert(`Échec de la connexion: ${errorData.message || "Erreur inconnue"}`);
+            }
         } catch (error) {
-          console.log(error.message);
+            console.error('Erreur réseau:', error);
+            alert(`Erreur réseau: ${error.message}`);
         }
-      }}
-      validationSchema={Yup.object({
-        email: Yup.string().required('Required'),
-        password: Yup.string().required('Required')
-      })}>
-      {({ isSubmitting }) => (
-        <Form>
-          <div className="form-group">
-            <label htmlFor="email">email:</label>
-            <Field className="form-control" type="email" name="email" />
-            <ErrorMessage style={{ color: 'red' }} name="email" component="div" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <Field className="form-control" type="password" name="password" />
-            <ErrorMessage style={{ color: 'red' }} name="password" component="div" />
-          </div>
-          <button className="btn btn-primary mt-3" type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-        </Form>
-      )}
-    </Formik>
-  );
+    }
+
+    return (
+        <div className='w-full h-full'>
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: ''
+                }}
+                onSubmit={submitLogin}
+                validationSchema={Yup.object({
+                    email: Yup.string().email('Adresse e-mail invalide').required('Champ requis'),
+                    password: Yup.string().required('Champ requis')
+                })}>
+                {({ isSubmitting }) => (
+                    <Form className="flex flex-col items-center justify-center min-h-screen bg-[#151515] text-white">
+                        <div className='w-full max-w-md p-8 space-y-4 bg-[#292929] rounded-lg shadow-lg'>
+                            <div>
+                                <label htmlFor="email" className="block mb-1 font-bold">E-mail</label>
+                                <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="email" name="email" />
+                                <ErrorMessage className="text-red-500 text-xs" name="email" component="div" />
+                            </div>
+                            <div>
+                                <label htmlFor="password" className="block mb-1 font-bold">Mot de passe</label>
+                                <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="password" name="password" />
+                                <ErrorMessage className="text-red-500 text-xs" name="password" component="div" />
+                            </div>
+                            <button className="mt-3 w-full p-3 bg-pink-500 text-white rounded hover:bg-pink-700 transition duration-200 ease-in-out" type="submit" disabled={isSubmitting}>
+                                Connexion
+                            </button>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
+        </div>
+    );
 }
 
 export default Login;
-
-// export default function Login(){
-//     return(
-//         <body>
-//             <div className="container">
-//                 <div className="column">
-//                     <div>
-//                         <label>E-mail</label>
-//                         <input type="email"/>
-//                     </div>
-
-//                     <div>
-//                         <label>Mot de passe</label>
-//                         <input type="password"/>
-//                     </div>
-//                 </div>
-//             </div>
-
-//             <button>Connexion</button>
-//         </body>
-//     )
-// }
