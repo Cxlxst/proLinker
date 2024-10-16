@@ -156,7 +156,7 @@ function App() {
             <Route path="/creer-mon-cv" element={<ProtectedRoute><CreateCv /></ProtectedRoute>} />
             <Route path="/modifier-mon-cv" element={<ProtectedRoute><EditCv /></ProtectedRoute>} />
             <Route path="/liste-cv" element={<AllCv />} />
-            <Route path="/parametres" element={<Settings />} />
+            <Route path="/parametres" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             <Route path="/404" element={<Error404 />} />
           </Routes>
         </div >
