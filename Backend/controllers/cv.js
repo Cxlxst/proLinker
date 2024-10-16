@@ -2,7 +2,7 @@ const { cv, job_type, cv_language, level, language, experience } = require('../m
 
 const createCV = async (req, res) => {
     try {
-        const { job_type_name, languages, experiences, ...cvData } = req.body;
+        const { job_type_name, languages, experiences, formations, ...cvData } = req.body;
         const jobType = await job_type.findOne({ name: job_type_name });
         if (!jobType) return res.status(404).json({ message: 'Type de job non trouvé' });
         const newCV = await cv.create({ ...cvData, user_id: req.user._id, job_type_id: jobType._id });
@@ -14,7 +14,13 @@ const createCV = async (req, res) => {
         }));
         await Promise.all(experiences.map(async exp => {
             exp.cvId = newCV._id;
+            exp.type = "Experience"
             await experience.create(exp);
+        }));
+        await Promise.all(formations.map(async form => {
+            form.cvId = newCV._id;
+            form.type = "Formation"
+            await experience.create(form);
         }));
         res.status(201).json(newCV);
     } catch (error) {

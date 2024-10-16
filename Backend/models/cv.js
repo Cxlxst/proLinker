@@ -5,8 +5,6 @@ const cvSchema = mongoose.Schema({
     region: { type: String, required: true },
     city: { type: String, required: true },
     visibility: { type: Boolean, default: true },
-    experience_id: { type: mongoose.Schema.Types.ObjectId, ref: 'experience', require: true },
-    studies_id: { type: mongoose.Schema.Types.ObjectId, ref: 'experience', require: true },
     hard_skill: { type: [String], required: true },
     soft_skill: { type: [String], required: true },
     hobbies: { type: String },
