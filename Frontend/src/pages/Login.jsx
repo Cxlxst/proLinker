@@ -49,17 +49,21 @@ function Login() {
                         <div className='w-full max-w-md p-8 space-y-4 bg-[#292929] rounded-lg shadow-lg'>
                             <div>
                                 <label htmlFor="email" className="block mb-1 font-bold">E-mail</label>
-                                <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="email" name="email" />
+                                <Field className="w-full p-2 text-white rounded outline-none transition-all hover:transition-all hover:ring-2 hover:ring-orange-500 focus:ring-2 focus:ring-orange-500 bg-stone-900" type="email" name="email" />
                                 <ErrorMessage className="text-red-500 text-xs" name="email" component="div" />
                             </div>
                             <div>
                                 <label htmlFor="password" className="block mb-1 font-bold">Mot de passe</label>
-                                <Field className="w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" type="password" name="password" />
+                                <Field className="w-full p-2 text-white rounded outline-none transition-all hover:transition-all hover:ring-2 hover:ring-orange-500 focus:ring-2 focus:ring-orange-500 bg-stone-900" type="password" name="password" />
                                 <ErrorMessage className="text-red-500 text-xs" name="password" component="div" />
                             </div>
                             <button className="mt-3 w-full p-3 bg-pink-500 text-white rounded hover:bg-pink-700 transition duration-200 ease-in-out" type="submit" disabled={isSubmitting}>
                                 Connexion
                             </button>
+                            <div>
+                                <p className="text-center">Vous n'avez pas encore de compte ?</p>
+                                <a className="flex justify-center items-center" href="/inscription"><b>Inscrivez-vous</b></a>
+                            </div>
                         </div>
                     </Form>
                 )}

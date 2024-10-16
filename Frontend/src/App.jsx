@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React, { useState } from "react";
 import { Logo, LogoIcon, Sidebar, SidebarBody, SidebarLink } from "./components/ui/sidebar";
-import { IconArrowLeft, IconBrandTabler, IconSettings, IconUserBolt } from "@tabler/icons-react";
+import {IconSettings, IconUserBolt, IconHome, IconLogout, IconFileCv } from "@tabler/icons-react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { cn } from "./libs/utils";
 import './App.css'
@@ -23,28 +23,35 @@ function App() {
             label: "Accueil",
             href: "/",
             icon: (
-                <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <IconHome className="text-white h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Connexion",
             href: "/connexion",
             icon: (
-                <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <IconUserBolt className="text-white h-5 w-5 flex-shrink-0" />
             ),
         },
+        {
+          label: "Curriculum vitæ",
+          href: "/mon-cv",
+          icon: (
+              <IconFileCv className="text-white h-5 w-5 flex-shrink-0" />
+          ),
+      },
         {
             label: "Paramètres",
             href: "/parametres",
             icon: (
-                <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <IconSettings className="text-white h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Déconnexion",
             href: "#",
             icon: (
-                <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                <IconLogout className="text-white h-5 w-5 flex-shrink-0" />
             ),
         },
     ];
@@ -54,7 +61,7 @@ function App() {
             <Router>
                 <div
                     className={cn(
-                        "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-screen h-screen flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+                        "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-screen h-screen flex-1 mx-auto overflow-hidden",
                     )}>
                     <Sidebar open={open} setOpen={setOpen}>
                         <SidebarBody className="justify-between gap-10">
@@ -66,7 +73,7 @@ function App() {
                                     ))}
                                 </div>
                             </div>
-                            <div>
+                            {/* <div>
                                 <SidebarLink
                                     link={{
                                         label: "Manu Arora",
@@ -80,7 +87,7 @@ function App() {
                                                 alt="Avatar" />
                                         ),
                                     }} />
-                            </div>
+                            </div> */}
                         </SidebarBody>
                     </Sidebar>
                     <Routes>
