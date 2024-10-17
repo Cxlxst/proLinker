@@ -47,11 +47,11 @@ const getCVs = async (req, res) => {
 
 const getCVById = async (req, res) => {
     try {
-        const cvDoc = await cv.findById(req.params.id).populate('job_type_id');
+        const cvDoc = await cv.findOne({ user_id: req.params.id }).populate('job_type_id');
         const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
         const experiences = await experience.find({ cvId: cvDoc._id });
-        const formattedLanguages = languages.map(lang => ({ language: lang.id_language.name, level: lang.id_level.name }));
-        const formattedExperiences = experiences.map(exp => ({ name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
+        const formattedLanguages = languages.map(lang => ({ language: lang.id_language.name, level_name: lang.id_level.name }));
+        const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
         res.status(200).json({ ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences });
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la récupération du CV', error });

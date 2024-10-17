@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldArray } from 'formik';
-import InfoInput from './InfoInput';
+import InfoInput from '../InfoInput';
 
 function FieldArraySection({ title, fieldArrayName, values }) {
     return (

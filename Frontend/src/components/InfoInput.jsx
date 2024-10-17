@@ -5,7 +5,7 @@ export default function InfoInput({ fields }) {
     return (
         <>
             {fields.map((field) => (
-                field.type === "text" || field.type === "date" ? (
+                field.type === "text" || field.type === "date" || field.type === "email" || field.type === "tel" || field.type === "password" ? (
                     <div key={field.name} className="space-y-2">
                         <label htmlFor={field.name} className="block text-sm font-semibold text-gray-400">{field.label}</label>
                         <Field name={field.name} type={field.type} className="form-input w-full p-2 text-white rounded outline-none focus:ring-2 focus:ring-pink-500" />
