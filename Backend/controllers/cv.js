@@ -36,7 +36,7 @@ const getCVs = async (req, res) => {
             const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
             const experiences = await experience.find({ cvId: cvDoc._id });
             const formattedLanguages = languages.map(lang => ({ language: lang.id_language.name, level: lang.id_level.name }));
-            const formattedExperiences = experiences.map(exp => ({ name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
+            const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
             return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences };
         }));
         res.status(200).json(formattedCVs);
