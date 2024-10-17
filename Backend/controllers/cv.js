@@ -1,4 +1,4 @@
-const { cv, job_type, cv_language, level, language, experience } = require('../models');
+const { cv, job_type, cv_language, level, language, experience, cv_user } = require('../models');
 
 const createCV = async (req, res) => {
     try {
@@ -31,13 +31,23 @@ const createCV = async (req, res) => {
 
 const getCVs = async (req, res) => {
     try {
+        const userId = req.user;
+        console.log("user : ", userId);
         const cvs = await cv.find().populate('job_type_id');
         const formattedCVs = await Promise.all(cvs.map(async cvDoc => {
             const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
             const experiences = await experience.find({ cvId: cvDoc._id });
+            console.log(cvDoc._id, userId);
+            const like = await cv_user.findOne({ id_cv: cvDoc._id, id_user: userId });
+            console.log(like);
+            // if(like == null){
+            //     like = false;
+            // }else{
+            //     like = true;
+            // }
             const formattedLanguages = languages.map(lang => ({ language: lang.id_language.name, level: lang.id_level.name }));
             const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
-            return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences };
+            return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences,  recommandation: like};
         }));
         res.status(200).json(formattedCVs);
     } catch (error) {
