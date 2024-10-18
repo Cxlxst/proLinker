@@ -120,7 +120,7 @@ export default function EditCv() {
                                 fields={[
                                     { name: 'city', label: 'Ville', type: 'text' },
                                     { name: 'region', label: 'Région', type: 'text' },
-                                    { name: 'profil', label: 'Profil', type: 'text' },
+                                    { name: 'profil', label: 'Poste', type: 'text' },
                                     { name: 'job_type_name', label: 'Type d\'emploi', type: 'select', options: jobTypes }]}
                             />
                             <SkillsSection values={values} skillType="Hard Skills" fieldName="hard_skill" />
@@ -129,7 +129,7 @@ export default function EditCv() {
                             <FieldArraySection title="Experiences" fieldArrayName="experiences" values={values} />
                             <FieldArraySection title="Formations" fieldArrayName="formations" values={values} />
                         </div>
-                        <button type="submit" className="w-full text-white bg-purple-600 px-6 py-3 rounded hover:bg-purple-700 transition duration-300">Mettre à jour le CV</button>
+                        <button type="submit" className="w-full text-white bg-pink-500 px-4 py-2 rounded hover:bg-pink-700 transition duration-300">Mettre à jour le CV</button>
                     </Form>
                 )}
             </Formik>

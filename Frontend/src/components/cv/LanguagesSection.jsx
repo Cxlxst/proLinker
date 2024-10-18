@@ -6,11 +6,11 @@ export default function LanguagesSection({ values, languages, levels }) {
         <FieldArray name="languages">
             {({ push, remove }) => (
                 <div className="col-span-2 space-y-2">
-                    <label className="block text-sm font-semibold text-gray-400">Langues</label>
+                    <label className="block text-sm font-semibold text-white">Langues</label>
                     {values.languages.map((language, index) => (
                         <div key={index} className="flex items-center space-x-2">
                             <div className="w-full">
-                                <Field as="select" name={`languages[${index}].name`} className="form-select w-full p-2 text-gray-700 rounded">
+                                <Field as="select" name={`languages[${index}].name`} className="form-select w-full p-2 text-white rounded bg-[#151515]">
                                     <option value="">Sélectionnez une langue</option>
                                     {languages.map((lang) => (
                                         <option key={lang._id} value={lang.name} selected={lang.name === values.languages[index].name}>
@@ -21,7 +21,7 @@ export default function LanguagesSection({ values, languages, levels }) {
                                 <ErrorMessage name={`languages[${index}].name`} component="div" className="text-red-500 text-xs" />
                             </div>
                             <div className="w-full">
-                                <Field as="select" name={`languages[${index}].level_name`} className="form-select w-full p-2 text-gray-700 rounded">
+                                <Field as="select" name={`languages[${index}].level_name`} className="form-select w-full p-2 text-white rounded bg-[#151515]">
                                     <option value="">Sélectionnez un niveau</option>
                                     {levels.map((level_name) => (
                                         <option key={level_name._id} value={level_name.name} selected={level_name.name === values.languages[index].level_name}>
@@ -34,7 +34,7 @@ export default function LanguagesSection({ values, languages, levels }) {
                             <button
                                 type="button"
                                 onClick={() => remove(index)}
-                                className="text-red-500 hover:text-red-700 transition duration-300"
+                                className="text-white bg-red-700 hover:bg-red-900"
                             >
                                 Supprimer
                             </button>
@@ -43,7 +43,7 @@ export default function LanguagesSection({ values, languages, levels }) {
                     <button
                         type="button"
                         onClick={() => push({ name: '', level_name: '' })}
-                        className="text-white bg-purple-600 px-4 py-2 rounded hover:bg-purple-700 transition duration-300"
+                        className="text-white bg-pink-500 px-4 py-2 rounded hover:bg-pink-700 transition duration-300"
                     >
                         Ajouter une langue
                     </button>

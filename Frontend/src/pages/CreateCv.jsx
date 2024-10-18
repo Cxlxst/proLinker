@@ -105,7 +105,7 @@ export default function CreateCv() {
                                 fields={[
                                     { name: 'city', label: 'Ville', type: 'text' },
                                     { name: 'region', label: 'Région', type: 'text' },
-                                    { name: 'profil', label: 'Profil', type: 'text' },
+                                    { name: 'profil', label: 'Poste', type: 'text' },
                                     { name: 'job_type_name', label: 'Type d\'emploi', type: 'select', options: jobTypes },
                                 ]}
                             />
@@ -118,9 +118,9 @@ export default function CreateCv() {
                         <button
                             onClick={() => console.log(values)}
                             type="submit"
-                            className="w-full text-white bg-purple-600 px-6 py-3 rounded hover:bg-purple-700 transition duration-300"
+                            className="w-full text-white bg-pink-500 px-4 py-2 rounded hover:bg-pink-700 transition duration-300"
                         >
-                            Submit CV
+                            Ajouter mon CV
                         </button>
                     </Form>
                 )}
