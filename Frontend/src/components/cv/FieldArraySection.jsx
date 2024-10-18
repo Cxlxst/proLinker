@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldArray } from 'formik';
 import InfoInput from '../InfoInput';
 
-function FieldArraySection({ title, fieldArrayName, values }) {
+export default function FieldArraySection({ title, fieldArrayName, values }) {
     return (
         <FieldArray name={fieldArrayName}>
             {({ push, remove }) => (
@@ -39,5 +39,3 @@ function FieldArraySection({ title, fieldArrayName, values }) {
         </FieldArray>
     );
 }
-
-export default FieldArraySection;

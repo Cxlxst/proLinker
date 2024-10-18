@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const cvSchema = mongoose.Schema({
-    user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user', require: true },
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user', require: true, unique: true },
     region: { type: String, required: true },
     city: { type: String, required: true },
     visibility: { type: Boolean, default: true },

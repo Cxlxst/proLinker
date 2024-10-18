@@ -4,6 +4,7 @@ const { getCVs, createCV, getCVById, updateCV, deleteCV } = require('../controll
 const { protect } = require('../middleware/auth');
 
 router.get('/', getCVs);
+router.get('/connect', protect, getCVs);
 router.post('/create', protect, createCV);
 router.get('/:id', getCVById);
 router.put('/:id', protect, updateCV);

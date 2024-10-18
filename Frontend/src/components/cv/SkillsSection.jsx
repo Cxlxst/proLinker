@@ -1,7 +1,7 @@
 import React from 'react';
 import { FieldArray, Field, ErrorMessage } from 'formik';
 
-function SkillsSection({ values, skillType, fieldName }) {
+export default function SkillsSection({ values, skillType, fieldName }) {
     return (
         <FieldArray name={fieldName}>
             {({ push, remove }) => (
@@ -22,5 +22,3 @@ function SkillsSection({ values, skillType, fieldName }) {
         </FieldArray>
     );
 }
-
-export default SkillsSection;
