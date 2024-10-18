@@ -3,12 +3,11 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { UserContext } from '../context/userContext.jsx';
-
 import InfoInput from "../components/InfoInput";
 
-function Register() {
+export default function Register() {
     const navigate = useNavigate();
-    const { register } = useContext(UserContext);
+    const { updateUser } = useContext(UserContext);
 
     const submitRegister = async (values) => {
         try {
@@ -21,7 +20,7 @@ function Register() {
             });
             if (response.ok) {
                 const data = await response.json();
-                register(data);
+                updateUser(data);
                 navigate('/', { replace: true });
             } else {
                 const errorData = await response.json();
@@ -38,20 +37,20 @@ function Register() {
         <div className='w-full h-full'>
             <Formik
                 initialValues={{
-                    firstName: '',
-                    lastName: '',
+                    firstname: '',
+                    lastname: '',
                     email: '',
-                    phoneNumber: '',
-                    birthDate: '',
+                    phone: '',
+                    birthdate: '',
                     password: ''
                 }}
                 onSubmit={submitRegister}
                 validationSchema={Yup.object({
-                    firstName: Yup.string().required('Champ requis'),
-                    lastName: Yup.string().required('Champ requis'),
+                    firstname: Yup.string().required('Champ requis'),
+                    lastname: Yup.string().required('Champ requis'),
                     email: Yup.string().email('Adresse e-mail invalide').required('Champ requis'),
-                    phoneNumber: Yup.string().matches(/^[0-9]+$/, "Doit contenir uniquement des chiffres").min(10, 'Doit contenir exactement 10 chiffres').max(10, 'Doit contenir exactement 10 chiffres').required('Champ requis'),
-                    birthDate: Yup.date().required('Champ requis'),
+                    phone: Yup.string().matches(/^[0-9]+$/, "Doit contenir uniquement des chiffres").min(10, 'Doit contenir exactement 10 chiffres').max(10, 'Doit contenir exactement 10 chiffres').required('Champ requis'),
+                    birthdate: Yup.date().required('Champ requis'),
                     password: Yup.string().min(8, 'Le mot de passe doit comporter au moins 8 caractères').required('Champ requis')
                 })}>
                 {({ isSubmitting }) => (
@@ -60,11 +59,11 @@ function Register() {
                             <div className="grid grid-cols-2 gap-4">
                                 <InfoInput
                                     fields={[
-                                        { name: 'firstName', label: 'Prénom', type: 'text' },
-                                        { name: 'lastName', label: 'Nom', type: 'text' },
+                                        { name: 'firstname', label: 'Prénom', type: 'text' },
+                                        { name: 'lastname', label: 'Nom', type: 'text' },
                                         { name: 'email', label: 'E-mail', type: 'email' },
-                                        { name: 'phoneNumber', label: 'Numéro de téléphone', type: 'tel' },
-                                        { name: `birthDate`, label: "Date de naissance", type: "date" },
+                                        { name: 'phone', label: 'Numéro de téléphone', type: 'tel' },
+                                        { name: `birthdate`, label: "Date de naissance", type: "date" },
                                         { name: 'password', label: 'Mot de passe', type: 'password' },
                                     ]}
                                 />
@@ -79,5 +78,3 @@ function Register() {
         </div>
     );
 }
-
-export default Register;

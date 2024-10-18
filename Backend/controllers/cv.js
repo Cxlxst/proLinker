@@ -31,23 +31,16 @@ const createCV = async (req, res) => {
 
 const getCVs = async (req, res) => {
     try {
-        const userId = req.user;
-        console.log("user : ", userId);
+        let connect = false;
+        if (req?.user && req?.user._id) connect = true;
         const cvs = await cv.find().populate('job_type_id');
         const formattedCVs = await Promise.all(cvs.map(async cvDoc => {
             const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
             const experiences = await experience.find({ cvId: cvDoc._id });
-            console.log(cvDoc._id, userId);
-            const like = await cv_user.findOne({ id_cv: cvDoc._id, id_user: userId });
-            console.log(like);
-            // if(like == null){
-            //     like = false;
-            // }else{
-            //     like = true;
-            // }
-            const formattedLanguages = languages.map(lang => ({ language: lang.id_language.name, level: lang.id_level.name }));
+            const like = connect ? await cv_user.findOne({ id_cv: cvDoc._id, id_user: req.user._id }) : {};
+            const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level: lang.id_level.name }));
             const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
-            return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences,  recommandation: like};
+            return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like };
         }));
         res.status(200).json(formattedCVs);
     } catch (error) {
@@ -60,7 +53,7 @@ const getCVById = async (req, res) => {
         const cvDoc = await cv.findOne({ user_id: req.params.id }).populate('job_type_id');
         const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
         const experiences = await experience.find({ cvId: cvDoc._id });
-        const formattedLanguages = languages.map(lang => ({ language: lang.id_language.name, level_name: lang.id_level.name }));
+        const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level_name: lang.id_level.name }));
         const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
         res.status(200).json({ ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences });
     } catch (error) {
@@ -70,7 +63,8 @@ const getCVById = async (req, res) => {
 
 const updateCV = async (req, res) => {
     try {
-        const { job_type_name, languages, experiences, ...cvData } = req.body;
+        const { job_type_name, languages, experiences, formations, ...cvData } = req.body;
+        console.log(req.body)
         const jobType = await job_type.findOne({ name: job_type_name });
         if (!jobType) return res.status(404).json({ message: 'Type de job non trouvé' });
         const updatedCV = await cv.findByIdAndUpdate(req.params.id, { ...cvData, job_type_id: jobType._id }, { new: true });
@@ -83,18 +77,23 @@ const updateCV = async (req, res) => {
             if (!levelDoc || !languageDoc) throw new Error(`Niveau ou langue non trouvé`);
             await cv_language.create({ id_cv: updatedCV._id, id_language: languageDoc._id, id_level: levelDoc._id });
         }));
-
         await experience.deleteMany({ cvId: req.params.id });
         await Promise.all(experiences.map(async exp => {
             exp.cvId = updatedCV._id;
+            exp.type = "Experience";
             await experience.create(exp);
         }));
-
+        await Promise.all(formations.map(async form => {
+            form.cvId = updatedCV._id;
+            form.type = "Formation";
+            await experience.create(form);
+        }));
         res.status(200).json(updatedCV);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 const deleteCV = async (req, res) => {
     try {

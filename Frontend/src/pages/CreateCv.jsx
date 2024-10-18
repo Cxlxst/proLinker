@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { UserContext } from '../context/userContext';
@@ -9,27 +9,31 @@ import SkillsSection from '../components/cv/SkillsSection';
 import LanguagesSection from '../components/cv/LanguagesSection';
 import InfoInput from '../components/InfoInput';
 
-function CreateCv() {
+export default function CreateCv() {
     const [jobTypes, setJobTypes] = useState([]);
     const [languages, setLanguages] = useState([]);
     const [languageLevels, setLanguageLevels] = useState([]);
-    const navigate = useNavigate()
-    const bearer = useContext(UserContext).getUserInfos().token;
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
-    const fetchData = async (url, setStateFunction) => {
+    const axiosRequest = async ({ method, url, setStateFunction = null, data = null, headers = null, suppressErrorLog = false }) => {
         try {
-            const response = await axios.get(url);
-            setStateFunction(response.data);
+            const config = { method, url, headers, data };
+            const response = await axios(config);
+            if (setStateFunction !== null) setStateFunction(response.data);
+            return response.data;
         } catch (error) {
-            console.error(`Error fetching data from ${url}`, error);
+            if (!suppressErrorLog) console.error(`Error in Axios request to ${url}`, error.response || error);
+            return null;
         }
     };
 
     useEffect(() => {
-        fetchData('http://localhost:5000/api/job_types', setJobTypes);
-        fetchData('http://localhost:5000/api/languages', setLanguages);
-        fetchData('http://localhost:5000/api/levels', setLanguageLevels);
-    }, []);
+        axiosRequest({ method: 'GET', url: `http://localhost:5000/api/cvs/${user._id}`, headers: { Authorization: `Bearer ${user.token}` }, suppressErrorLog: true }).then(data => { if (data) {navigate('/modifier-mon-cv', { replace: true })}});
+        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/job_types', setStateFunction: setJobTypes });
+        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/languages', setStateFunction: setLanguages });
+        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/levels', setStateFunction: setLanguageLevels });
+    }, [user, navigate]);
 
     const validationSchema = Yup.object().shape({
         city: Yup.string().required('Champ requis'),
@@ -68,24 +72,11 @@ function CreateCv() {
 
     const submitCV = async (values) => {
         try {
-            const response = await fetch('http://localhost:5000/api/cvs/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${bearer}`,
-                },
-                body: JSON.stringify(values),
-            });
-            if (response.ok) {
-                navigate('/', { replace: true });
-            } else {
-                const errorData = await response.json();
-                console.error('Échec de l\'inscription:', errorData);
-                alert(`Échec de l'inscription: ${errorData.message || 'Erreur inconnue'}`);
-            }
+            await axiosRequest({ method: 'POST', url: 'http://localhost:5000/api/cvs/create', data: values, headers: { Authorization: `Bearer ${user.token}`, 'Content-Type': 'application/json' }});
+            navigate('/', { replace: true });
         } catch (error) {
-            console.error('Erreur réseau:', error);
-            alert(`Erreur réseau: ${error.message}`);
+            console.error('Erreur lors de la création du CV:', error);
+            alert(`Erreur lors de la création du CV: ${error.message || 'Erreur inconnue'}`);
         }
     };
 
@@ -100,15 +91,9 @@ function CreateCv() {
                     soft_skill: [],
                     profil: '',
                     job_type_name: 'CDI',
-                    languages: [
-                        { name: 'Anglais', level_name: "Débutant" }
-                    ],
-                    experiences: [
-                        { name: '', beginning: '', end: '', current: false, structureName: '', description: '' },
-                    ],
-                    formations: [
-                        { name: '', beginning: '', end: '', current: false, structureName: '', description: '' },
-                    ],
+                    languages: [{ name: 'Anglais', level_name: "Débutant" }],
+                    experiences: [{ name: '', beginning: '', end: '', current: false, structureName: '', description: '' }],
+                    formations: [{ name: '', beginning: '', end: '', current: false, structureName: '', description: '' }]
                 }}
                 validationSchema={validationSchema}
                 onSubmit={submitCV}
@@ -143,5 +128,3 @@ function CreateCv() {
         </div>
     );
 }
-
-export default CreateCv;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { UserContext } from '../context/userContext';
@@ -23,34 +23,25 @@ export default function EditCv() {
     const [languageLevels, setLanguageLevels] = useState([]);
     const navigate = useNavigate();
 
-    const fetchData = async (url, setStateFunction) => {
+    const axiosRequest = async ({ method, url, setStateFunction = null, data = null, headers = null }) => {
         try {
-            const response = await axios.get(url);
-            setStateFunction(response.data);
+            const config = { method, url, headers, data };
+            const response = await axios(config);
+            if (setStateFunction !== null) setStateFunction(response.data);
+            return response.data;
         } catch (error) {
-            console.error(`Error fetching data from ${url}`, error);
+            if (setStateFunction === setCvData) { navigate("/creer-mon-cv") }
+            console.error(`Error in Axios request to ${url}`, error.response || error);
+            throw error.response || error;
         }
     };
 
     useEffect(() => {
-        fetchData('http://localhost:5000/api/job_types', setJobTypes);
-        fetchData('http://localhost:5000/api/languages', setLanguages);
-        fetchData('http://localhost:5000/api/levels', setLanguageLevels);
-
-        const fetchCv = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/api/cvs/${user._id}`, {
-                    headers: {
-                        Authorization: `Bearer ${user.token}`,
-                    },
-                });
-                setCvData(response.data);
-            } catch (error) {
-                console.error('Erreur de récupération du CV:', error);
-            }
-        };
-        fetchCv();
-    }, [user]);
+        axiosRequest({ method: 'GET', url: `http://localhost:5000/api/cvs/${user._id}`, headers: { Authorization: `Bearer ${user.token}` }, setStateFunction: setCvData });
+        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/job_types', setStateFunction: setJobTypes });
+        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/languages', setStateFunction: setLanguages });
+        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/levels', setStateFunction: setLanguageLevels });
+    }, []);
 
     const validationSchema = Yup.object().shape({
         city: Yup.string().required('Champ requis'),
@@ -89,25 +80,11 @@ export default function EditCv() {
 
     const submitCV = async (values) => {
         try {
-            console.log(values)
-            const response = await fetch(`http://localhost:5000/api/cvs/${cvData._id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${user.token}`,
-                },
-                body: JSON.stringify(values),
-            });
-            if (response.ok) {
-                navigate('/', { replace: true });
-            } else {
-                const errorData = await response.json();
-                console.error('Échec de la mise à jour du CV:', errorData);
-                alert(`Échec de la mise à jour: ${errorData.message || 'Erreur inconnue'}`);
-            }
+            await axiosRequest({ method: 'PUT', url: `http://localhost:5000/api/cvs/${cvData._id}`, data: values, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.token}` } });
+            navigate('/', { replace: true });
         } catch (error) {
-            console.error('Erreur réseau:', error);
-            alert(`Erreur réseau: ${error.message}`);
+            console.error('Erreur lors de la mise à jour du CV:', error);
+            alert(`Erreur lors de la mise à jour du CV: ${error.message || 'Erreur inconnue'}`);
         }
     };
 
@@ -130,16 +107,8 @@ export default function EditCv() {
                     profil: cvData.profil || '',
                     job_type_name: cvData.job_type_id?.name || 'CDI',
                     languages: cvData.languages || [{ name: 'Anglais', level_name: 'Débutant' }],
-                    experiences: experiences.map(exp => ({
-                        ...exp,
-                        beginning: formatDate(exp.beginning),
-                        end: formatDate(exp.end),
-                    })),
-                    formations: formations.map(formation => ({
-                        ...formation,
-                        beginning: formatDate(formation.beginning),
-                        end: formatDate(formation.end),
-                    })),
+                    experiences: experiences.map(exp => ({ ...exp, beginning: formatDate(exp.beginning), end: formatDate(exp.end) })),
+                    formations: formations.map(formation => ({ ...formation, beginning: formatDate(formation.beginning), end: formatDate(formation.end) })),
                 }}
                 validationSchema={validationSchema}
                 onSubmit={submitCV}
@@ -152,8 +121,7 @@ export default function EditCv() {
                                     { name: 'city', label: 'Ville', type: 'text' },
                                     { name: 'region', label: 'Région', type: 'text' },
                                     { name: 'profil', label: 'Profil', type: 'text' },
-                                    { name: 'job_type_name', label: 'Type d\'emploi', type: 'select', options: jobTypes },
-                                ]}
+                                    { name: 'job_type_name', label: 'Type d\'emploi', type: 'select', options: jobTypes }]}
                             />
                             <SkillsSection values={values} skillType="Hard Skills" fieldName="hard_skill" />
                             <SkillsSection values={values} skillType="Soft Skills" fieldName="soft_skill" />
@@ -161,12 +129,7 @@ export default function EditCv() {
                             <FieldArraySection title="Experiences" fieldArrayName="experiences" values={values} />
                             <FieldArraySection title="Formations" fieldArrayName="formations" values={values} />
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full text-white bg-purple-600 px-6 py-3 rounded hover:bg-purple-700 transition duration-300"
-                        >
-                            Mettre à jour le CV
-                        </button>
+                        <button type="submit" className="w-full text-white bg-purple-600 px-6 py-3 rounded hover:bg-purple-700 transition duration-300">Mettre à jour le CV</button>
                     </Form>
                 )}
             </Formik>
