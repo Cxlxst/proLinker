@@ -6,7 +6,6 @@ import { UserContext } from '../context/userContext';
 const ProtectedRoute = ({ children }) => {
     const { getUserInfos } = useContext(UserContext);
     const user = getUserInfos();
-  console.log(user);
 
   if (!user) {
     return <Navigate to="/connexion" />;

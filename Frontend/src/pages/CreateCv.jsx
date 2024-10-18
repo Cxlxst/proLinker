@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import FieldArraySection from '../components/cv/FieldArraySection';
 import SkillsSection from '../components/cv/SkillsSection';
 import LanguagesSection from '../components/cv/LanguagesSection';
-import InfoInput from '../components/cv/InfoInput';
+import InfoInput from '../components/InfoInput';
 
 function CreateCv() {
     const [jobTypes, setJobTypes] = useState([]);
