@@ -82,7 +82,7 @@ export default function AllCv() {
                 const formations = cv.experiences.filter(formation => formation.type === "Formation");
 
                 return (
-                    <div key={cv._id} className="mb-8 p-4 bg-[#1c1c1c] rounded-md shadow-md max-w-[350px] max-h-[450px]">
+                    <div key={cv._id} className="mb-8 p-4 bg-[#1c1c1c] rounded-md shadow-md min-w-[350px] max-w-[350px] max-h-[450px]">
                         {/* <h2 className="text-2xl font-semibold mb-4">{cv.profil} - {cv.city}, {cv.region}</h2> */}
 
                         {/* Infos */}
