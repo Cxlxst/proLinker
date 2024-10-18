@@ -95,9 +95,9 @@ export default function Settings() {
                                         { name: 'lastname', label: 'Nom', type: 'text' },
                                         { name: 'email', label: 'E-mail', type: 'email' },
                                         { name: 'phone', label: 'Numéro de téléphone', type: 'tel' },
-                                        { name: 'birthdate', label: 'Date de naissance', type: 'date' },
                                         { name: 'currentPassword', label: 'Mot de passe actuel', type: 'password' },
-                                        { name: 'newPassword', label: 'Nouveau mot de passe', type: 'password' }
+                                        { name: 'newPassword', label: 'Nouveau mot de passe', type: 'password' },
+                                        { name: 'birthdate', label: 'Date de naissance', type: 'date' }
                                     ]}
                                 />
                             </div>
