@@ -64,12 +64,10 @@ const getCVById = async (req, res) => {
 const updateCV = async (req, res) => {
     try {
         const { job_type_name, languages, experiences, formations, ...cvData } = req.body;
-        console.log(req.body)
         const jobType = await job_type.findOne({ name: job_type_name });
         if (!jobType) return res.status(404).json({ message: 'Type de job non trouvé' });
         const updatedCV = await cv.findByIdAndUpdate(req.params.id, { ...cvData, job_type_id: jobType._id }, { new: true });
         if (!updatedCV) return res.status(404).json({ message: 'CV non trouvé' });
-
         await cv_language.deleteMany({ id_cv: req.params.id });
         await Promise.all(languages.map(async lang => {
             const levelDoc = await level.findOne({ name: lang.level_name });

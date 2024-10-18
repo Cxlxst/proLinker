@@ -26,7 +26,7 @@ export default function AllCv() {
     useEffect(() => {
         const fetchCvs = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/cvs');
+                const response = await axios.get('http://localhost:5000/api/cvs');
                 setCvs(response.data);
                 console.log(response.data);
 
@@ -111,7 +111,7 @@ export default function AllCv() {
                             </ul>
                         </div>
 
-                        {/* Languages */}
+                        {/* Languages
                         <div className="mt-10 inline-block">
                             <h3 className="text-xl font-semibold">Languages</h3>
                             <ul>
@@ -123,7 +123,7 @@ export default function AllCv() {
                             </ul>
                         </div>
 
-                        {/* Expériences */}
+                        {/* Expériences
                         <div>
                             <h3 className="text-xl font-semibold">Expériences</h3>
                             <ul>
@@ -137,7 +137,7 @@ export default function AllCv() {
                             </ul>
                         </div>
 
-                        {/* Formations */}
+                        {/* Formations
                         <div>
                             <h3 className="text-xl font-semibold">Formations</h3>
                             <ul>
@@ -149,8 +149,9 @@ export default function AllCv() {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-                        {/* Bouton Like */}
+                        </div> */}
+
+                        {/* Bouton Like
                         <div className="flex-auto w-1/12">
                             {!cv.recommandation ? (
                                 <button
@@ -167,7 +168,7 @@ export default function AllCv() {
                                     <img src="./src/assets/like.svg" alt="Like" />
                                 </button>
                             )}
-                        </div>
+                        </div> */}
                         {/* Voir */}
                         <a href="#" className="mt-28 ml-[270px] w-10 h-10 bg-pink-500 hover:bg-pink-700 transition rounded-full flex items-center justify-center">
                             <img src={eyeIcon} />
