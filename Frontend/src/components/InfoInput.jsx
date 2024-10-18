@@ -14,7 +14,7 @@ export default function InfoInput({ fields }) {
                 ) : field.type === "select" ? (
                     <div key={field.name} className="space-y-2">
                         <label htmlFor={field.name} className="block text-sm font-semibold white">{field.label}</label>
-                        <Field as="select" name={field.name} className="form-select w-full p-2 text-gray-700 rounded bg-[#151515]">
+                        <Field as="select" name={field.name} className="form-select w-full p-2 text-white rounded bg-[#151515]">
                             {field.options.map((type, index) => (
                                 <option key={index} value={type.name}>{type.name}</option>
                             ))}
