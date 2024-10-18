@@ -116,7 +116,6 @@ export default function CreateCv() {
                             <FieldArraySection title="Formations" fieldArrayName="formations" values={values} />
                         </div>
                         <button
-                            onClick={() => console.log(values)}
                             type="submit"
                             className="w-full text-white bg-pink-500 px-4 py-2 rounded hover:bg-pink-700 transition duration-300"
                         >

@@ -25,7 +25,6 @@ const UserProvider = ({ children }) => {
     // Fonction de mise à jour des informations utilisateur
     const updateUser = (updatedUser) => {
         const newUser = { ...user, ...updatedUser };
-        console.log(newUser)
         setUser(newUser);
         localStorage.setItem('user', JSON.stringify(newUser));
     };

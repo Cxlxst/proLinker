@@ -33,7 +33,7 @@ const getCVs = async (req, res) => {
     try {
         let connect = false;
         if (req?.user && req?.user._id) connect = true;
-        const cvs = await cv.find().populate('job_type_id');
+        const cvs = await cv.find().populate('job_type_id').populate({ path: 'user_id', select: '-password' });
         const formattedCVs = await Promise.all(cvs.map(async cvDoc => {
             const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
             const experiences = await experience.find({ cvId: cvDoc._id });
@@ -50,7 +50,7 @@ const getCVs = async (req, res) => {
 
 const getCVById = async (req, res) => {
     try {
-        const cvDoc = await cv.findOne({ user_id: req.params.id }).populate('job_type_id');
+        const cvDoc = await cv.findOne({ user_id: req.params.id }).populate('job_type_id').populate({ path: 'user_id', select: '-password' });
         const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
         const experiences = await experience.find({ cvId: cvDoc._id });
         const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level_name: lang.id_level.name }));
