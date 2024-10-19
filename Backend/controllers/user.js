@@ -24,7 +24,7 @@ const getInfos = async (req, res) => {
 
 // Met à jour un utilisateur
 const updateUser = async (req, res) => {
-  const { firstname, lastname, email, phone, birthdate, currentPassword, newPassword } = req.body;
+  const { firstname, lastname, email, phone, birthdate, currentPassword, newPassword, profil_shrek_character } = req.body;
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: 'Utilisateur non trouvé' });
