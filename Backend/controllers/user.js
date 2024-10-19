@@ -39,6 +39,7 @@ const updateUser = async (req, res) => {
     user.email = email || user.email;
     user.phone = phone || user.phone;
     user.birthdate = birthdate || user.birthdate;
+    user.profil_shrek_character = profil_shrek_character || user.profil_shrek_character
     if (newPassword) {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(newPassword, salt);
@@ -51,6 +52,7 @@ const updateUser = async (req, res) => {
       email: updatedUser.email,
       phone: updatedUser.phone,
       birthdate: updatedUser.birthdate,
+      profil_shrek_character: updateUser.profil_shrek_character,
       token: generateToken(updatedUser._id),
     });
   } catch (error) {
