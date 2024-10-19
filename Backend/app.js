@@ -4,12 +4,27 @@ const dotenv = require('dotenv');
 const apiRouter = require('./routes');
 const { initializeBdd } = require('./initialize')
 const cors = require('cors');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
 
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+const swaggerOptions = {
+  swaggerDefinition: {
+      openapi: '3.0.0',
+      info: {
+          title: 'CV API',
+          version: '1.0.0'
+      }
+  },
+  apis: ['./routes/*.js']
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 // Autorise l'accès exterieur au serveur
 app.use(cors({
@@ -21,6 +36,9 @@ app.use(cors({
 mongoose.connect(process.env.MONGO_URI)
     .then(async () => { await initializeBdd(); console.log('MongoDB connecté') })
     .catch((error) => console.error(`Erreur de connexion à MongoDB : ${error.message}`));
+
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.use('/api/', apiRouter);
 

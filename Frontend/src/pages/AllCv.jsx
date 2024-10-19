@@ -17,12 +17,14 @@ export default function AllCv() {
         navigate(`/cv/${cvId}`);
     };
 
-    const userList = (list) =>{
-        console.log(list);
-        let test = list.map((user, index) => `${user.firstname} ${user.lastname}<br>`).join('');
-        console.log(test);
-        return test;
-    }
+    const userList = (list) => {
+        if (list.users && list.users.length > 0) {
+            return list.users.map((user) => `${user.firstname} ${user.lastname}<br>`).join('');
+        } else if (list.message) {
+            return list.message;
+        } 
+        return "";
+    };
 
     const toggleLike = async (cvId) => {
         if (!user) return;
@@ -95,9 +97,16 @@ export default function AllCv() {
                                     {cv.}
                                 </div> */}
                                 <div className="flex justify-center">
-                                    <p id="tooltip-user" data-tooltip-content={userList(cv.usersRecommandation.users)} data-html={true}>
-                                        {cv.usersRecommandation.users.length}
-                                    </p>
+                                    {cv.usersRecommandation.users && (
+                                        <p id="tooltip-user" data-tooltip-content={userList(cv.usersRecommandation)} data-html={true}>
+                                            {cv.usersRecommandation.users.length}
+                                        </p>
+                                    )}
+                                    {cv.usersRecommandation.message && (
+                                        <p id="tooltip-user" data-tooltip-content={userList(cv.usersRecommandation)} data-html={true}>
+                                            0
+                                        </p>
+                                    )}
                                     <Tooltip anchorSelect="#tooltip-user" data-html={true} />
                                 </div>
                             </div>
