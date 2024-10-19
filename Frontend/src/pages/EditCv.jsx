@@ -1,19 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
 import { UserContext } from '../context/userContext';
 import { useNavigate } from 'react-router-dom';
 import FieldArraySection from '../components/cv/FieldArraySection';
 import SkillsSection from '../components/cv/SkillsSection';
 import LanguagesSection from '../components/cv/LanguagesSection';
 import InfoInput from '../components/InfoInput';
-
-const formatDate = (dateString) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
-};
+import { axiosRequest, formatDate } from '../libs/apiUtils';
+import { SchemaCv } from '../libs/schema';
 
 export default function EditCv() {
     const { user } = useContext(UserContext);
@@ -23,60 +17,12 @@ export default function EditCv() {
     const [languageLevels, setLanguageLevels] = useState([]);
     const navigate = useNavigate();
 
-    const axiosRequest = async ({ method, url, setStateFunction = null, data = null, headers = null }) => {
-        try {
-            const config = { method, url, headers, data };
-            const response = await axios(config);
-            if (setStateFunction !== null) setStateFunction(response.data);
-            return response.data;
-        } catch (error) {
-            if (setStateFunction === setCvData) { navigate("/creer-mon-cv") }
-            console.error(`Error in Axios request to ${url}`, error.response || error);
-            throw error.response || error;
-        }
-    };
-
     useEffect(() => {
         axiosRequest({ method: 'GET', url: `http://localhost:5000/api/cvs/${user._id}`, headers: { Authorization: `Bearer ${user.token}` }, setStateFunction: setCvData });
         axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/job_types', setStateFunction: setJobTypes });
         axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/languages', setStateFunction: setLanguages });
         axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/levels', setStateFunction: setLanguageLevels });
     }, []);
-
-    const validationSchema = Yup.object().shape({
-        city: Yup.string().required('Champ requis'),
-        region: Yup.string().required('Champ requis'),
-        profil: Yup.string().required('Champ requis'),
-        job_type_name: Yup.string(),
-        hard_skill: Yup.array().of(Yup.string().required('Compétence requise')),
-        soft_skill: Yup.array().of(Yup.string().required('Compétence requise')),
-        languages: Yup.array().of(
-            Yup.object({
-                name: Yup.string(),
-                level_name: Yup.string(),
-            })
-        ),
-        experiences: Yup.array().of(
-            Yup.object({
-                name: Yup.string().required('Intitulé du poste requis'),
-                beginning: Yup.date().required('Date de début requise'),
-                end: Yup.date().required('Date de fin requise'),
-                current: Yup.boolean(),
-                structureName: Yup.string().required(`Nom de l'entreprise requis`),
-                description: Yup.string(),
-            })
-        ),
-        formations: Yup.array().of(
-            Yup.object({
-                name: Yup.string().required('Intitulé de la formation requis'),
-                beginning: Yup.date().required('Date de début requise'),
-                end: Yup.date().required('Date de fin requise'),
-                current: Yup.boolean(),
-                structureName: Yup.string().required(`Nom de l'établissement requis`),
-                description: Yup.string(),
-            })
-        ),
-    });
 
     const submitCV = async (values) => {
         try {
@@ -110,7 +56,7 @@ export default function EditCv() {
                     experiences: experiences.map(exp => ({ ...exp, beginning: formatDate(exp.beginning), end: formatDate(exp.end) })),
                     formations: formations.map(formation => ({ ...formation, beginning: formatDate(formation.beginning), end: formatDate(formation.end) })),
                 }}
-                validationSchema={validationSchema}
+                validationSchema={SchemaCv}
                 onSubmit={submitCV}
             >
                 {({ values }) => (

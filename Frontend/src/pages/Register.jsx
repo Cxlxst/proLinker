@@ -1,9 +1,10 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { UserContext } from '../context/userContext.jsx';
 import InfoInput from "../components/InfoInput";
+import { axiosRequest } from '../libs/apiUtils.jsx';
 
 export default function Register() {
     const navigate = useNavigate();
@@ -11,13 +12,7 @@ export default function Register() {
 
     const submitRegister = async (values) => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(values)
-            });
+            const response = await axiosRequest({ method: 'POST', url: 'http://localhost:5000/api/auth/register', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values)});
             if (response.ok) {
                 const data = await response.json();
                 updateUser(data);

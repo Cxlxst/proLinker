@@ -1,52 +1,28 @@
-import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import eyeIcon from '../assets/eye.svg';
 import likeIcon from '../assets/like.svg';
 import unlikeIcon from '../assets/unlike.svg';
-import pp1 from '../assets/shrek/pp1.svg';
 import { UserContext } from '../context/userContext';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-
-const calculateAge = (birthdate) => {
-    const today = new Date(), birthDate = new Date(birthdate);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    return monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate()) ? age - 1 : age;
-};
+import { axiosRequest, calculateAge, profilePictures } from "../libs/apiUtils";
+import { useNavigate } from "react-router-dom";
 
 export default function AllCv() {
     const [cvs, setCvs] = useState(null), [likedCvs, setLikedCvs] = useState({});
     const { user } = useContext(UserContext);
+    const navigate = useNavigate()
+
+    const viewCVDetails = (cvId) => {
+        navigate(`/cv/${cvId}`);
+    };
 
     const userList = (list) =>{
         console.log(list);
-        let test =list.map((user, index) => `${user.firstname} ${user.lastname}<br>`).join('');
+        let test = list.map((user, index) => `${user.firstname} ${user.lastname}<br>`).join('');
         console.log(test);
         return test;
     }
-
-    const profilePictures = [pp1];
-
-    const axiosRequest = async ({ method, url, data = null, headers = null, setStateFunction = null, liked = null }) => {
-        try {
-            const config = { method, url, headers, data };
-            const response = await axios(config);
-            if (liked !== null) {
-                const transformedData = response.data.reduce((acc, el) => { acc[el._id] = true; return acc; }, {});
-                if (setStateFunction !== null) setStateFunction(transformedData);
-                console.log(response.data);
-                return transformedData;
-            } else {
-                if (setStateFunction !== null) setStateFunction(response.data);
-                console.log(response.data);
-                return response.data;
-            }
-        } catch (error) {
-            console.error(`Axios Error: ${error.response?.status || 'Unknown'}`, error.response?.data || error.message);
-            throw error;
-        }
-    };
 
     const toggleLike = async (cvId) => {
         if (!user) return;
@@ -75,9 +51,9 @@ export default function AllCv() {
                         <div>
                             <div className="flex items-center ml-3">
                                 <img
-                                    src={profilePictures[cv.user_id.profil_shrek_character] || profilePictures[0]}
+                                    src={profilePictures[cv.user_id.profil_shrek_character].image || profilePictures[0].image}
                                     alt="Profile"
-                                    className="w-12 h-12 rounded-full mr-3"
+                                    className="bg-white w-12 h-12 rounded-full mr-3"
                                 />
                                 <div>
                                     <h2 className="text-2xl font-semibold">{cv.user_id.firstname} {cv.user_id.lastname}</h2>
@@ -104,7 +80,7 @@ export default function AllCv() {
                                 </div>
                             </div>
                         </div>
-                        <a href="#" className="absolute bottom-4 right-4 w-10 h-10 bg-pink-500 hover:bg-pink-700 transition rounded-full flex items-center justify-center">
+                        <a href="" onClick={(e) => { e.preventDefault(); viewCVDetails(cv.user_id._id) }} className="absolute bottom-4 right-4 w-10 h-10 bg-pink-500 hover:bg-pink-700 transition rounded-full flex items-center justify-center">
                             <img src={eyeIcon} alt="Voir plus" />
                         </a>
                         {user && (

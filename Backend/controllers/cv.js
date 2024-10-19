@@ -40,7 +40,6 @@ const getCVs = async (req, res) => {
             const like = connect ? await cv_user.findOne({ id_cv: cvDoc._id, id_user: req.user._id }) : {};
             const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level: lang.id_level.name }));
             const usersRecommandation = await allRecommandationsFromCv(cvDoc._id);
-            console.log(usersRecommandation);
             const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
             return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like, usersRecommandation: usersRecommandation };
             // return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like};

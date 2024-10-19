@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
 import { UserContext } from '../context/userContext';
 import { useNavigate } from 'react-router-dom';
 import FieldArraySection from '../components/cv/FieldArraySection';
 import SkillsSection from '../components/cv/SkillsSection';
 import LanguagesSection from '../components/cv/LanguagesSection';
 import InfoInput from '../components/InfoInput';
+import { axiosRequest } from '../libs/apiUtils';
+import { SchemaCv } from '../libs/schema';
 
 export default function CreateCv() {
     const [jobTypes, setJobTypes] = useState([]);
@@ -16,59 +16,12 @@ export default function CreateCv() {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const axiosRequest = async ({ method, url, setStateFunction = null, data = null, headers = null, suppressErrorLog = false }) => {
-        try {
-            const config = { method, url, headers, data };
-            const response = await axios(config);
-            if (setStateFunction !== null) setStateFunction(response.data);
-            return response.data;
-        } catch (error) {
-            if (!suppressErrorLog) console.error(`Error in Axios request to ${url}`, error.response || error);
-            return null;
-        }
-    };
-
     useEffect(() => {
         axiosRequest({ method: 'GET', url: `http://localhost:5000/api/cvs/${user._id}`, headers: { Authorization: `Bearer ${user.token}` }, suppressErrorLog: true }).then(data => { if (data) {navigate('/modifier-mon-cv', { replace: true })}});
         axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/job_types', setStateFunction: setJobTypes });
         axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/languages', setStateFunction: setLanguages });
         axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/levels', setStateFunction: setLanguageLevels });
     }, [user, navigate]);
-
-    const validationSchema = Yup.object().shape({
-        city: Yup.string().required('Champ requis'),
-        region: Yup.string().required('Champ requis'),
-        profil: Yup.string().required('Champ requis'),
-        job_type_name: Yup.string(),
-        hard_skill: Yup.array().of(Yup.string().required('Compétence requise')),
-        soft_skill: Yup.array().of(Yup.string().required('Compétence requise')),
-        languages: Yup.array().of(
-            Yup.object({
-                name: Yup.string(),
-                level_name: Yup.string(),
-            })
-        ),
-        experiences: Yup.array().of(
-            Yup.object({
-                name: Yup.string().required('Intitulé du poste requis'),
-                beginning: Yup.date().required('Date de début requise'),
-                end: Yup.date().required('Date de fin requise'),
-                current: Yup.boolean(),
-                structureName: Yup.string().required(`Nom de l'entreprise requis`),
-                description: Yup.string(),
-            })
-        ),
-        formations: Yup.array().of(
-            Yup.object({
-                name: Yup.string().required('Intitulé de la formation requis'),
-                beginning: Yup.date().required('Date de début requise'),
-                end: Yup.date().required('Date de fin requise'),
-                current: Yup.boolean(),
-                structureName: Yup.string().required(`Nom de l'établissement requis`),
-                description: Yup.string(),
-            })
-        ),
-    });
 
     const submitCV = async (values) => {
         try {
@@ -95,7 +48,7 @@ export default function CreateCv() {
                     experiences: [{ name: '', beginning: '', end: '', current: false, structureName: '', description: '' }],
                     formations: [{ name: '', beginning: '', end: '', current: false, structureName: '', description: '' }]
                 }}
-                validationSchema={validationSchema}
+                validationSchema={SchemaCv}
                 onSubmit={submitCV}
             >
                 {({ values }) => (

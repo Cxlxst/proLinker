@@ -15,6 +15,7 @@ import CreateCv from './pages/CreateCv';
 import EditCv from './pages/EditCv';
 import AllCv from './pages/AllCv';
 import Error404 from './pages/404';
+import CVDetails from './pages/Apercu';
 
 function App() {
     const [open, setOpen] = useState(false);
@@ -113,6 +114,7 @@ function App() {
                     <Route path="/liste-cv" element={<AllCv />} />
                     <Route path="/parametres" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
                     <Route path="/404" element={<Error404 />} />
+                    <Route path="/cv/:id" element={<CVDetails />} />
                 </Routes>
             </div>
         </Router>
