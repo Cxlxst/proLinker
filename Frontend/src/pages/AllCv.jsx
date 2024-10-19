@@ -5,6 +5,8 @@ import likeIcon from '../assets/like.svg';
 import unlikeIcon from '../assets/unlike.svg';
 import pp1 from '../assets/shrek/pp1.svg';
 import { UserContext } from '../context/userContext';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 
 const calculateAge = (birthdate) => {
     const today = new Date(), birthDate = new Date(birthdate);
@@ -17,6 +19,13 @@ export default function AllCv() {
     const [cvs, setCvs] = useState(null), [likedCvs, setLikedCvs] = useState({});
     const { user } = useContext(UserContext);
 
+    const userList = (list) =>{
+        console.log(list);
+        let test =list.map((user, index) => `${user.firstname} ${user.lastname}<br>`).join('');
+        console.log(test);
+        return test;
+    }
+
     const profilePictures = [pp1];
 
     const axiosRequest = async ({ method, url, data = null, headers = null, setStateFunction = null, liked = null }) => {
@@ -26,9 +35,11 @@ export default function AllCv() {
             if (liked !== null) {
                 const transformedData = response.data.reduce((acc, el) => { acc[el._id] = true; return acc; }, {});
                 if (setStateFunction !== null) setStateFunction(transformedData);
+                console.log(response.data);
                 return transformedData;
             } else {
                 if (setStateFunction !== null) setStateFunction(response.data);
+                console.log(response.data);
                 return response.data;
             }
         } catch (error) {
@@ -41,7 +52,7 @@ export default function AllCv() {
         if (!user) return;
         const isLiked = likedCvs[cvId];
         try {
-            await axiosRequest({ method: 'GET', url: `http://localhost:5000/api/recommandations/${isLiked ? 'delete' : 'add'}/${cvId}`, headers: { Authorization: `Bearer ${user.token}` }});
+            await axiosRequest({ method: 'GET', url: `http://localhost:5000/api/recommandations/${isLiked ? 'delete' : 'add'}/${cvId}`, headers: { Authorization: `Bearer ${user.token}` } });
             setLikedCvs(prev => ({ ...prev, [cvId]: !isLiked }));
         } catch (error) {
             console.error("Erreur lors de la modification de recommandation", error);
@@ -104,6 +115,15 @@ export default function AllCv() {
                                 >
                                     <img src={isLiked ? likeIcon : unlikeIcon} alt={isLiked ? "Like" : "Unlike"} className="w-6 h-6" />
                                 </button>
+                                {/* <div>
+                                    {cv.}
+                                </div> */}
+                                <div className="flex justify-center">
+                                    <p id="tooltip-user" data-tooltip-content={userList(cv.usersRecommandation.users)} data-html={true}>
+                                        {cv.usersRecommandation.users.length}
+                                    </p>
+                                    <Tooltip anchorSelect="#tooltip-user" data-html={true} />
+                                </div>
                             </div>
                         )}
                     </div>

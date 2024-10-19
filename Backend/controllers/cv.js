@@ -1,4 +1,4 @@
-const { cv, job_type, cv_language, level, language, experience, cv_user } = require('../models');
+const { cv, job_type, cv_language, level, language, experience, cv_user, user } = require('../models');
 
 const createCV = async (req, res) => {
     try {
@@ -39,14 +39,34 @@ const getCVs = async (req, res) => {
             const experiences = await experience.find({ cvId: cvDoc._id });
             const like = connect ? await cv_user.findOne({ id_cv: cvDoc._id, id_user: req.user._id }) : {};
             const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level: lang.id_level.name }));
+            const usersRecommandation = await allRecommandationsFromCv(cvDoc._id);
+            console.log(usersRecommandation);
             const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
-            return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like };
+            return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like, usersRecommandation: usersRecommandation };
+            // return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like};
         }));
         res.status(200).json(formattedCVs);
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la récupération des CVs', error });
     }
 };
+
+//tous les users qui ont recommandé un CV
+const allRecommandationsFromCv = async (id) => {
+    const cvId = id;
+    try {
+        const recommendations = await cv_user.find({ id_cv: cvId });
+        if (recommendations.length === 0) {
+            return { message: 'Aucune recommandation trouvée pour ce CV' };
+        }
+        const userIds = recommendations.map(reco => reco.id_user);
+        const users = await user.find({ _id: { $in: userIds } });
+        return { users : users };
+
+    } catch (error) {
+        return { message: 'Erreur lors de la récupération des utilisateurs', error: error.message };
+    }
+}
 
 const getCVById = async (req, res) => {
     try {
