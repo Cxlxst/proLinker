@@ -43,7 +43,7 @@ router.get('/', protect, getUsers);
  *                   birthdate:
  *                     type: string
  *                   profil_shrek_character:
- *                     type: string
+ *                     type: integer
  *       500:
  *         description: Erreur serveur
  */
@@ -87,7 +87,7 @@ router.get('/:email', protect, getInfos);
  *                 birthdate:
  *                   type: string
  *                 profil_shrek_character:
- *                   type: string
+ *                   type: integer
  *       404:
  *         description: Email non trouvé
  *       500:
@@ -134,7 +134,7 @@ router.put('/:id', protect, updateUser)
  *               newPassword:
  *                 type: string
  *               profil_shrek_character:
- *                 type: string
+ *                 type: integer
  *     responses:
  *       200:
  *         description: Utilisateur mis à jour avec succès
@@ -156,7 +156,7 @@ router.put('/:id', protect, updateUser)
  *                 birthdate:
  *                   type: string
  *                 profil_shrek_character:
- *                   type: string
+ *                   type: integer
  *                 token:
  *                   type: string
  *       400:
