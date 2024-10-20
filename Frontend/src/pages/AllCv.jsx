@@ -124,9 +124,11 @@ export default function AllCv() {
                                     </div>
                                 </div>
                             </div>
-                            <a href="" onClick={(e) => { e.preventDefault(); viewCVDetails(cv.user_id._id) }} className="absolute bottom-4 right-4 w-10 h-10 bg-pink-500 hover:bg-pink-700 transition rounded-full flex items-center justify-center">
-                                <img src={eyeIcon} alt="Voir plus" />
-                            </a>
+                            {user && (
+                                <a href="" onClick={(e) => { e.preventDefault(); viewCVDetails(cv.user_id._id) }} className="absolute bottom-4 right-4 w-10 h-10 bg-pink-500 hover:bg-pink-700 transition rounded-full flex items-center justify-center">
+                                    <img src={eyeIcon} alt="Voir plus" />
+                                </a>
+                            )}
                             {user && (
                                 <div className="absolute top-4 right-4">
                                     <button

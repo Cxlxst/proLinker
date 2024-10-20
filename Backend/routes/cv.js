@@ -217,7 +217,7 @@ router.post('/create', protect, createCV);
  *         description: Erreur lors de la création du CV
  */
 
-router.get('/:id', getCVById);
+router.get('/:id', protect, getCVById);
 
 /**
  * @swagger
