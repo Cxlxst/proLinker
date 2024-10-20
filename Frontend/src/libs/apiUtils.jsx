@@ -17,11 +17,9 @@ export const axiosRequest = async ({ method, url, setStateFunction = null, data 
         if (liked !== null) {
             const transformedData = response.data.reduce((acc, el) => { acc[el._id] = true; return acc; }, {});
             if (setStateFunction !== null) setStateFunction(transformedData);
-            console.log(response.data);
             return transformedData;
         } else {
             if (setStateFunction !== null) setStateFunction(response.data);
-            console.log(response.data);
             return response.data;
         }
     } catch (error) {

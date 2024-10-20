@@ -13,7 +13,7 @@ export default function CreateCv() {
     const [jobTypes, setJobTypes] = useState([]);
     const [languages, setLanguages] = useState([]);
     const [languageLevels, setLanguageLevels] = useState([]);
-    const { user } = useContext(UserContext);
+    const { user, updateUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,6 +26,7 @@ export default function CreateCv() {
     const submitCV = async (values) => {
         try {
             await axiosRequest({ method: 'POST', url: 'http://localhost:5000/api/cvs/create', data: values, headers: { Authorization: `Bearer ${user.token}`, 'Content-Type': 'application/json' }});
+            updateUser({...user, hasCV: true})
             navigate('/', { replace: true });
         } catch (error) {
             console.error('Erreur lors de la création du CV:', error);

@@ -1,7 +1,7 @@
 import { BackgroundGradientAnimation } from "../components/ui/background-gradient-animation";
 import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Error404() {
 
   const navigate = useNavigate();
 

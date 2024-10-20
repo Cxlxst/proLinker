@@ -129,8 +129,6 @@ const search = async (req, res) => {
     if (req?.user && req?.user._id) connect = true;
     let searchTerm = req.params.term;
     const cvs = await cv.find().populate('job_type_id').populate({ path: 'user_id', select: '-password' });
-    console.log(cvs);
-    console.log(searchTerm);
     const formattedCVs = await Promise.all(cvs
         .filter(cvDoc => 
             cvDoc.user_id.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || 

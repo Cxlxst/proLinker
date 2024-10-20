@@ -119,7 +119,11 @@ export const SidebarLink = ({ link, className, ...props }) => {
             className={cn("flex items-center justify-start gap-2 group/sidebar py-2 cursor-pointer", className)}
             {...props}
         >
-            {link.icon}
+            {link.icon && typeof link.icon === 'string' ? (
+                <img src={link.icon} alt="Profile Icon" className="w-6 h-6 flex-shrink-0 rounded-full bg-white" />
+            ) : (
+                link.icon
+            )}
             <motion.span
                 animate={{ display: animate ? (open ? "inline-block" : "none") : "inline-block", opacity: animate ? (open ? 1 : 0) : 1 }}
                 className="text-white text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
