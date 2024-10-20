@@ -13,8 +13,8 @@ export default function FieldArraySection({ title, fieldArrayName, values }) {
                             <div className="grid grid-cols-2 gap-6">
                                 <InfoInput
                                     fields={[
-                                        { name: `${fieldArrayName}[${index}].structureName`, label: "Nom de l'entreprise", type: "text" },
-                                        { name: `${fieldArrayName}[${index}].name`, label: "Poste", type: "text" },
+                                        { name: `${fieldArrayName}[${index}].structureName`, label: "Lieu/Structure", type: "text" },
+                                        { name: `${fieldArrayName}[${index}].name`, label: "Nom/Intitulé", type: "text" },
                                         { name: `${fieldArrayName}[${index}].beginning`, label: "Date de début", type: "date" },
                                         { name: `${fieldArrayName}[${index}].end`, label: "Date de fin", type: "date" },
                                         { name: `${fieldArrayName}[${index}].current`, label: "En cours", type: "checkbox" },
