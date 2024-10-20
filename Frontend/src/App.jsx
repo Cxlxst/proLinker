@@ -15,7 +15,7 @@ import CreateCv from './pages/CreateCv';
 import EditCv from './pages/EditCv';
 import AllCv from './pages/AllCv';
 import CVDetails from './pages/Apercu';
-import Error404 from './pages/404'; // Import the 404 page
+import Error404 from './pages/404';
 import { profilePictures } from './libs/apiUtils';
 
 export default function App() {
