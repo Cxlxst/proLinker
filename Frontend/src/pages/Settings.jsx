@@ -61,7 +61,7 @@ export default function Settings() {
                     lastname: Yup.string().required('Champ requis'),
                     email: Yup.string().email('Adresse e-mail invalide').required('Champ requis'),
                     phone: Yup.string().matches(/^[0-9]+$/, "Doit contenir uniquement des chiffres").min(10, 'Doit contenir exactement 10 chiffres').max(10, 'Doit contenir exactement 10 chiffres').required('Champ requis'),
-                    birthdate: Yup.date().required('Champ requis'),
+                    birthdate: Yup.date().required('Champ requis').max(new Date(), 'La date de naissance doit être antérieure à aujourd\'hui'),
                     currentPassword: Yup.string().min(8, 'Le mot de passe doit comporter au moins 8 caractères'),
                     newPassword: Yup.string().min(8, 'Le nouveau mot de passe doit comporter au moins 8 caractères'),
                     profil_shrek_character: Yup.number()

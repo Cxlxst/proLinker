@@ -136,12 +136,12 @@ export default function AllCv() {
                                     </button>
                                     <div className="flex justify-center">
                                         {cv.usersRecommandation.users && (
-                                            <p id="tooltip-user" data-tooltip-content={userList(cv.usersRecommandation)} data-html={true}>
+                                            <p id="tooltip-user" data-tooltip-html={userList(cv.usersRecommandation)} data-html={true}>
                                                 {cv.usersRecommandation.users.length}
                                             </p>
                                         )}
                                         {cv.usersRecommandation.message && (
-                                            <p id="tooltip-user" data-tooltip-content={userList(cv.usersRecommandation)} data-html={true}>
+                                            <p id="tooltip-user" data-tooltip-html={userList(cv.usersRecommandation)} data-html={true}>
                                                 0
                                             </p>
                                         )}

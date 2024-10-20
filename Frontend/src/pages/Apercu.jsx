@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from '../context/userContext';
 import { axiosRequest, calculateAge, formatDate, profilePictures } from "../libs/apiUtils";
 import 'react-tooltip/dist/react-tooltip.css';
-import eyeIcon from '../assets/eye.svg';
+import arrow from '../assets/arrow.svg';
 
 export default function CVDetails() {
     const [cv, setCv] = useState(null);
@@ -37,8 +37,8 @@ export default function CVDetails() {
                         <p className="mt-2">{cv.profil}</p>
                     </div>
                 </div>
-                <button onClick={() => navigate(-1)} className="p-3 bg-pink-500 rounded-full hover:bg-pink-700 transition">
-                    <img src={eyeIcon} alt="Retour" className="w-6 h-6" />
+                <button onClick={() => navigate(-1)} className="p-3 bg-pink-500 rounded-full hover:bg-pink-700 transition h-12">
+                    <img src={arrow} alt="Retour" className="w-6 h-6" />
                 </button>
             </div>
 
