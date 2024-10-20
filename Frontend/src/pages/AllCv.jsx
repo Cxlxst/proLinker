@@ -58,7 +58,6 @@ export default function AllCv() {
         <div className="text-white">Chargement des CV...</div>
     ) : (
         <div className="w-full h-screen bg-[#151515] text-white p-4 flex flex-col overflow-y-auto">
-            {/* Search input */}
             <div className="mb-3 xl:w-96">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <input
@@ -85,8 +84,6 @@ export default function AllCv() {
                     </span>
                 </div>
             </div>
-
-            {/* CV Cards */}
             <div className="flex flex-wrap justify-center gap-10 overflow-y-auto h-[80vh]">
                 {cvs.map((cv, index) => {
                     const age = calculateAge(cv.user_id.birthdate), isLiked = likedCvs[cv._id];
