@@ -8,10 +8,11 @@ import InfoInput from "../components/InfoInput";
 export default function Login() {
     const navigate = useNavigate();
     const { login } = useContext(UserContext);
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     const submitLogin = async (values) => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch(`${apiUrl}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -13,6 +13,7 @@ export default function AllCv() {
     const { user } = useContext(UserContext);
     const navigate = useNavigate()
     const [searchTerm, setSearchTerm] = useState('');
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     const viewCVDetails = (cvId) => {
         navigate(`/cv/${cvId}`);
@@ -31,7 +32,7 @@ export default function AllCv() {
         if (!user) return;
         const isLiked = likedCvs[cvId];
         try {
-            await axiosRequest({ method: 'GET', url: `http://localhost:5000/api/recommandations/${isLiked ? 'delete' : 'add'}/${cvId}`, headers: { Authorization: `Bearer ${user.token}` } });
+            await axiosRequest({ method: 'GET', url: `${apiUrl}/api/recommandations/${isLiked ? 'delete' : 'add'}/${cvId}`, headers: { Authorization: `Bearer ${user.token}` } });
             setLikedCvs(prev => ({ ...prev, [cvId]: !isLiked }));
         } catch (error) {
             console.error("Erreur lors de la modification de recommandation", error);
@@ -39,16 +40,16 @@ export default function AllCv() {
     };
 
     useEffect(() => {
-        axiosRequest({ method: "GET", url: "http://localhost:5000/api/cvs", setStateFunction: setCvs });
-        if (user) axiosRequest({ method: "GET", url: "http://localhost:5000/api/recommandations/allrecoFromUser", headers: { Authorization: `Bearer ${user.token}` }, setStateFunction: setLikedCvs, liked: true });
+        axiosRequest({ method: "GET", url: `${apiUrl}/api/cvs`, setStateFunction: setCvs });
+        if (user) axiosRequest({ method: "GET", url: `${apiUrl}/api/recommandations/allrecoFromUser`, headers: { Authorization: `Bearer ${user.token}` }, setStateFunction: setLikedCvs, liked: true });
     }, [user]);
 
 
     const search = async () => {
         if (searchTerm !== "") {
-            axiosRequest({ method: "GET", url: `http://localhost:5000/api/cvs/search/${searchTerm}`, setStateFunction: setCvs });
+            axiosRequest({ method: "GET", url: `${apiUrl}/api/cvs/search/${searchTerm}`, setStateFunction: setCvs });
         } else {
-            axiosRequest({ method: "GET", url: "http://localhost:5000/api/cvs", setStateFunction: setCvs });
+            axiosRequest({ method: "GET", url: `${apiUrl}/api/cvs`, setStateFunction: setCvs });
         }
     }
 

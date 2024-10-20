@@ -16,17 +16,18 @@ export default function EditCv() {
     const [languages, setLanguages] = useState([]);
     const [languageLevels, setLanguageLevels] = useState([]);
     const navigate = useNavigate();
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        axiosRequest({ method: 'GET', url: `http://localhost:5000/api/cvs/${user._id}`, headers: { Authorization: `Bearer ${user.token}` }, setStateFunction: setCvData });
-        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/job_types', setStateFunction: setJobTypes });
-        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/languages', setStateFunction: setLanguages });
-        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/levels', setStateFunction: setLanguageLevels });
+        axiosRequest({ method: 'GET', url: `${apiUrl}/api/cvs/${user._id}`, headers: { Authorization: `Bearer ${user.token}` }, setStateFunction: setCvData });
+        axiosRequest({ method: 'GET', url: `${apiUrl}/api/job_types`, setStateFunction: setJobTypes });
+        axiosRequest({ method: 'GET', url: `${apiUrl}/api/languages`, setStateFunction: setLanguages });
+        axiosRequest({ method: 'GET', url: `${apiUrl}/api/levels`, setStateFunction: setLanguageLevels });
     }, []);
 
     const submitCV = async (values) => {
         try {
-            await axiosRequest({ method: 'PUT', url: `http://localhost:5000/api/cvs/${cvData._id}`, data: values, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.token}` } });
+            await axiosRequest({ method: 'PUT', url: `${apiUrl}/api/cvs/${cvData._id}`, data: values, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.token}` } });
             navigate('/', { replace: true });
         } catch (error) {
             console.error('Erreur lors de la mise à jour du CV:', error);

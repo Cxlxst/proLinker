@@ -11,11 +11,12 @@ export default function Register() {
     const { updateUser } = useContext(UserContext);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [showOptions, setShowOptions] = useState(false); 
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     const submitRegister = async (values) => {
         try {
             values.profil_shrek_character = selectedImageIndex;
-            const response = await axiosRequest({ method: 'POST', url: 'http://localhost:5000/api/auth/register', headers: { 'Content-Type': 'application/json' }, data: JSON.stringify(values) });
+            const response = await axiosRequest({ method: 'POST', url: `${apiUrl}/api/auth/register`, headers: { 'Content-Type': 'application/json' }, data: JSON.stringify(values) });
             if (response) {
                 updateUser(response);
                 navigate('/', { replace: true });

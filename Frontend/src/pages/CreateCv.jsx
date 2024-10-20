@@ -15,17 +15,18 @@ export default function CreateCv() {
     const [languageLevels, setLanguageLevels] = useState([]);
     const { user, updateUser } = useContext(UserContext);
     const navigate = useNavigate();
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        axiosRequest({ method: 'GET', url: `http://localhost:5000/api/cvs/${user._id}`, headers: { Authorization: `Bearer ${user.token}` }, suppressErrorLog: true }).then(data => { if (data) {navigate('/modifier-mon-cv', { replace: true })}});
-        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/job_types', setStateFunction: setJobTypes });
-        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/languages', setStateFunction: setLanguages });
-        axiosRequest({ method: 'GET', url: 'http://localhost:5000/api/levels', setStateFunction: setLanguageLevels });
+        axiosRequest({ method: 'GET', url: `${apiUrl}/api/cvs/${user._id}`, headers: { Authorization: `Bearer ${user.token}` }, suppressErrorLog: true }).then(data => { if (data) {navigate('/modifier-mon-cv', { replace: true })}});
+        axiosRequest({ method: 'GET', url: `${apiUrl}/api/job_types`, setStateFunction: setJobTypes });
+        axiosRequest({ method: 'GET', url: `${apiUrl}/api/languages`, setStateFunction: setLanguages });
+        axiosRequest({ method: 'GET', url: `${apiUrl}/api/levels`, setStateFunction: setLanguageLevels });
     }, [user, navigate]);
 
     const submitCV = async (values) => {
         try {
-            await axiosRequest({ method: 'POST', url: 'http://localhost:5000/api/cvs/create', data: values, headers: { Authorization: `Bearer ${user.token}`, 'Content-Type': 'application/json' }});
+            await axiosRequest({ method: 'POST', url: `${apiUrl}/api/cvs/create`, data: values, headers: { Authorization: `Bearer ${user.token}`, 'Content-Type': 'application/json' }});
             updateUser({...user, hasCV: true})
             navigate('/', { replace: true });
         } catch (error) {

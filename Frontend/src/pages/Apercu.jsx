@@ -10,9 +10,10 @@ export default function CVDetails() {
     const { user } = useContext(UserContext);
     const { id } = useParams();
     const navigate = useNavigate();
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        axiosRequest({ method: "GET", url: `http://localhost:5000/api/cvs/${id}`, setStateFunction: setCv });
+        axiosRequest({ method: "GET", url: `${apiUrl}/api/cvs/${id}`, setStateFunction: setCv });
     }, [id]);
 
     if (!cv) {

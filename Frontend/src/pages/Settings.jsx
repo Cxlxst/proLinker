@@ -12,10 +12,11 @@ export default function Settings() {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [showOptions, setShowOptions] = useState(false); 
     const navigate = useNavigate();
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchUserInfo = async () => {
-            const response = await axiosRequest({ method: 'GET', url: `http://localhost:5000/api/users/${user.email}`, headers: { 'Authorization': `Bearer ${user.token}` }, setStateFunction: setInfoUserMore });
+            const response = await axiosRequest({ method: 'GET', url: `${apiUrl}/api/users/${user.email}`, headers: { 'Authorization': `Bearer ${user.token}` }, setStateFunction: setInfoUserMore });
             if (response) setSelectedImageIndex(response.profil_shrek_character || 0);
         };
         fetchUserInfo();
@@ -23,7 +24,7 @@ export default function Settings() {
 
     const submitSettings = async (values) => {
         values.profil_shrek_character = selectedImageIndex;
-        const response = await axiosRequest({ method: 'PUT', url: `http://localhost:5000/api/users/${user._id}`, data: values, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` }});
+        const response = await axiosRequest({ method: 'PUT', url: `${apiUrl}/api/users/${user._id}`, data: values, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` }});
         if (response) {
             updateUser(response);
             alert('Informations mises à jour avec succès');
