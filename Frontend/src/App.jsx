@@ -53,7 +53,7 @@ export default function App() {
                                 {(user ? linksLog : linksNotLog).map((link, idx) => <SidebarLink key={idx} link={link} />)}
                             </div>
                         </div>
-                        {user && (
+                        {user && user.hasCV && (
                             <SidebarLink
                                 link={{
                                     label: user.name,
