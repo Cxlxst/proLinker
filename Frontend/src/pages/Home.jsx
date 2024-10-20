@@ -1,7 +1,7 @@
 import { BackgroundGradientAnimation } from "../components/ui/background-gradient-animation";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { UserContext } from '../context/userContext';
+import { UserContext } from '../context/userContext.jsx';
 
 export default function Home() {
     const navigate = useNavigate();

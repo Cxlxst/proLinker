@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { UserContext } from '../context/userContext';
+import { UserContext } from '../context/userContext.jsx';
 import { axiosRequest, calculateAge, formatDate, profilePictures } from "../libs/apiUtils";
 import 'react-tooltip/dist/react-tooltip.css';
 import arrow from '../assets/arrow.svg';

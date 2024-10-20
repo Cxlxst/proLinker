@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import eyeIcon from '../assets/eye.svg';
 import likeIcon from '../assets/like.svg';
 import unlikeIcon from '../assets/unlike.svg';
-import { UserContext } from '../context/userContext';
+import { UserContext } from '../context/userContext.jsx';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { axiosRequest, calculateAge, profilePictures } from "../libs/apiUtils";
