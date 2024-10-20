@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getCVs, createCV, getCVById, updateCV, deleteCV } = require('../controllers/cv');
+const { getCVs, createCV, getCVById, updateCV, deleteCV, search } = require('../controllers/cv');
 const { protect } = require('../middleware/auth');
 
 /**
@@ -74,7 +74,7 @@ router.get('/connect', protect, getCVs);
 
 /**
  * @swagger
- * /api/cv/connect:
+ * /api/cvs/connect:
  *   get:
  *     summary: Récupère tous les CVs pour les utilisateurs connectés
  *     tags: [CVs]
@@ -136,7 +136,7 @@ router.post('/create', protect, createCV);
 
 /**
  * @swagger
- * /api/cv/create:
+ * /api/cvs/create:
  *   post:
  *     summary: Crée un nouveau CV
  *     tags: [CVs]
@@ -193,7 +193,7 @@ router.get('/:id', getCVById);
 
 /**
  * @swagger
- * /api/cv/{id}:
+ * /api/cvs/{id}:
  *   get:
  *     summary: Récupère un CV par ID
  *     tags: [CVs]
@@ -324,7 +324,7 @@ router.delete('/:id', protect, deleteCV);
 
 /**
  * @swagger
- * /api/cv/{id}:
+ * /api/cvs/{id}:
  *   delete:
  *     summary: Supprime un CV
  *     tags: [CVs]
@@ -345,5 +345,7 @@ router.delete('/:id', protect, deleteCV);
  *       500:
  *         description: Erreur lors de la suppression du CV
  */
+
+router.get('/search/:term', search);
 
 module.exports = router;

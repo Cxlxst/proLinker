@@ -111,7 +111,6 @@ const updateCV = async (req, res) => {
     }
 };
 
-
 const deleteCV = async (req, res) => {
     try {
         const deletedCV = await cv.findByIdAndDelete(req.params.id);
@@ -124,4 +123,35 @@ const deleteCV = async (req, res) => {
     }
 };
 
-module.exports = { createCV, getCVs, getCVById, updateCV, deleteCV };
+const search = async (req, res) => {
+    try{
+    let connect = false;
+    if (req?.user && req?.user._id) connect = true;
+    let searchTerm = req.params.term;
+    const cvs = await cv.find().populate('job_type_id').populate({ path: 'user_id', select: '-password' });
+    console.log(cvs);
+    console.log(searchTerm);
+    const formattedCVs = await Promise.all(cvs
+        .filter(cvDoc => 
+            cvDoc.user_id.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || 
+            cvDoc.user_id.lastname.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .map(async cvDoc => {
+        const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
+        const experiences = await experience.find({ cvId: cvDoc._id });
+        const like = connect ? await cv_user.findOne({ id_cv: cvDoc._id, id_user: req.user._id }) : {};
+        const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level: lang.id_level.name }));
+        const usersRecommandation = await allRecommandationsFromCv(cvDoc._id);
+        const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
+        return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like, usersRecommandation: usersRecommandation };
+        // return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like};
+    }));
+    res.status(200).json(formattedCVs);
+    } catch (error) {
+        console.error('Erreur détaillée:', error);
+        res.status(500).json({ message: 'Erreur lors de la recherche des CV', error });
+        throw error;
+    }
+}
+
+module.exports = { createCV, getCVs, getCVById, updateCV, deleteCV, search };
