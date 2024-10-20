@@ -68,7 +68,8 @@ const allRecommandationsFromCv = async (id) => {
 
 const getCVById = async (req, res) => {
     try {
-        const cvDoc = await cv.findOne({ user_id: req.params.id, visibility: true }).populate('job_type_id').populate({ path: 'user_id', select: '-password' });
+        const recherche = req.user._id === req.params.id ? { user_id: req.params.id } : { user_id: req.params.id, visibility: true }
+        const cvDoc = await cv.findOne(recherche).populate('job_type_id').populate({ path: 'user_id', select: '-password' });
         if (!cvDoc) return res.status(404).json({ message: 'CV non trouvé ou non visible' });
         const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
         const experiences = await experience.find({ cvId: cvDoc._id });
