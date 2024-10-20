@@ -69,7 +69,7 @@ export default function CVDetails() {
                     <h2 className="text-2xl font-semibold">Expériences Professionnelles</h2>
                     <div className="space-y-4 mt-4">
                         {cv.experiences.filter(exp => exp.type === 'Experience').map((exp, i) => (
-                            <div key={i} className="bg-gray-800 p-4 rounded-lg">
+                            <div key={i} className="bg-[#151515] p-4 rounded-lg" style={{ boxShadow: 'inset 0 0 10px 2px #F86F18' }}>
                                 <h3 className="text-xl font-bold">{exp.name} <span className="text-gray-400">({exp.structureName})</span></h3>
                                 <p className="text-gray-400 text-sm">De {formatDate(exp.beginning)} à {formatDate(exp.end) || 'Aujourd\'hui'}</p>
                                 <p className="mt-2">{exp.description}</p>
@@ -83,7 +83,7 @@ export default function CVDetails() {
                     <h2 className="text-2xl font-semibold">Formations</h2>
                     <div className="space-y-4 mt-4">
                         {cv.experiences.filter(exp => exp.type === 'Formation').map((formation, i) => (
-                            <div key={i} className="bg-gray-800 p-4 rounded-lg">
+                            <div key={i} className="bg-[#151515] p-4 rounded-lg" style={{ boxShadow: 'inset 0 0 10px 2px #F86F18' }}>
                                 <h3 className="text-xl font-bold">{formation.name} <span className="text-gray-400">({formation.structureName})</span></h3>
                                 <p className="text-gray-400 text-sm">De {formatDate(formation.beginning)} à {formatDate(formation.end)}</p>
                                 <p className="mt-2">{formation.description}</p>
@@ -105,9 +105,9 @@ export default function CVDetails() {
                 )}
 
                 {/* Contact Info */}
-                <div className="bg-[#292929] p-6 rounded-lg shadow-lg">
-                    <h2 className="text-2xl font-semibold">Contact</h2>
-                    <p className="mt-2"><strong>Email :</strong> {cv.user_id.email}</p>
+                <h2 className="text-2xl font-semibold">Contact</h2>
+                <div className="bg-[#151515] p-4 rounded-lg" style={{ boxShadow: 'inset 0 0 10px 2px #F86F18', marginTop: '15px' }}>
+                    <p><strong>Email :</strong> {cv.user_id.email}</p>
                     <p className="mt-2"><strong>Téléphone :</strong> {cv.user_id.phone}</p>
                 </div>
             </div>
