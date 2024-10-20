@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { UserContext } from '../context/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import FieldArraySection from '../components/cv/FieldArraySection';
@@ -27,7 +27,7 @@ export default function CreateCv() {
     const submitCV = async (values) => {
         try {
             await axiosRequest({ method: 'POST', url: `${apiUrl}/api/cvs/create`, data: values, headers: { Authorization: `Bearer ${user.token}`, 'Content-Type': 'application/json' }});
-            updateUser({...user, hasCV: true})
+            updateUser({...user, hasCV: true});
             navigate('/', { replace: true });
         } catch (error) {
             console.error('Erreur lors de la création du CV:', error);
@@ -53,7 +53,7 @@ export default function CreateCv() {
                 validationSchema={SchemaCv}
                 onSubmit={submitCV}
             >
-                {({ values }) => (
+                {({ values, handleChange }) => (
                     <Form className="bg-zinc-800 p-8 rounded-lg shadow-lg w-full max-w-4xl space-y-6 overflow-auto max-h-[calc(100vh-4rem)] mb-8">
                         <div className="grid grid-cols-2 gap-6">
                             <InfoInput
@@ -69,6 +69,10 @@ export default function CreateCv() {
                             <LanguagesSection values={values} languages={languages} levels={languageLevels} />
                             <FieldArraySection title="Experiences" fieldArrayName="experiences" values={values} />
                             <FieldArraySection title="Formations" fieldArrayName="formations" values={values} />
+                            <div className="col-span-2 flex items-center space-x-4 mt-4">
+                                <Field name="visibility" type="checkbox" id="visibility" className="focus:ring-pink-500 h-6 w-6 text-pink-600 border-gray-300 rounded cursor-pointer" />
+                                <label htmlFor="visibility" className="text-white cursor-pointer">Rendre mon CV visible aux autres utilisateurs</label>
+                            </div>
                         </div>
                         <button
                             type="submit"

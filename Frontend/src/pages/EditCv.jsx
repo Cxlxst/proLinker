@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { UserContext } from '../context/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import FieldArraySection from '../components/cv/FieldArraySection';
@@ -60,7 +60,7 @@ export default function EditCv() {
                 validationSchema={SchemaCv}
                 onSubmit={submitCV}
             >
-                {({ values }) => (
+                {({ values, handleChange }) => (
                     <Form className="bg-zinc-800 p-8 rounded-lg shadow-lg w-full max-w-4xl space-y-6 overflow-auto max-h-[calc(100vh-4rem)] mb-8">
                         <div className="grid grid-cols-2 gap-6">
                             <InfoInput
@@ -75,6 +75,10 @@ export default function EditCv() {
                             <LanguagesSection values={values} languages={languages} levels={languageLevels} />
                             <FieldArraySection title="Experiences" fieldArrayName="experiences" values={values} />
                             <FieldArraySection title="Formations" fieldArrayName="formations" values={values} />
+                            <div className="col-span-2 flex items-center space-x-4 mt-4">
+                                <Field name="visibility" type="checkbox" id="visibility" className="focus:ring-pink-500 h-6 w-6 text-pink-600 border-gray-300 rounded cursor-pointer" />
+                                <label htmlFor="visibility" className="text-white cursor-pointer">Rendre mon CV visible aux autres utilisateurs</label>
+                            </div>
                         </div>
                         <button type="submit" className="w-full text-white bg-pink-500 px-4 py-2 rounded hover:bg-pink-700 transition duration-300">Mettre à jour le CV</button>
                     </Form>

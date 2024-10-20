@@ -33,7 +33,7 @@ const getCVs = async (req, res) => {
     try {
         let connect = false;
         if (req?.user && req?.user._id) connect = true;
-        const cvs = await cv.find().populate('job_type_id').populate({ path: 'user_id', select: '-password' });
+        const cvs = await cv.find({ visibility: true }).populate('job_type_id').populate({ path: 'user_id', select: '-password' });
         const formattedCVs = await Promise.all(cvs.map(async cvDoc => {
             const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
             const experiences = await experience.find({ cvId: cvDoc._id });
@@ -42,7 +42,6 @@ const getCVs = async (req, res) => {
             const usersRecommandation = await allRecommandationsFromCv(cvDoc._id);
             const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
             return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like, usersRecommandation: usersRecommandation };
-            // return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like};
         }));
         res.status(200).json(formattedCVs);
     } catch (error) {
@@ -69,7 +68,8 @@ const allRecommandationsFromCv = async (id) => {
 
 const getCVById = async (req, res) => {
     try {
-        const cvDoc = await cv.findOne({ user_id: req.params.id }).populate('job_type_id').populate({ path: 'user_id', select: '-password' });
+        const cvDoc = await cv.findOne({ user_id: req.params.id, visibility: true }).populate('job_type_id').populate({ path: 'user_id', select: '-password' });
+        if (!cvDoc) return res.status(404).json({ message: 'CV non trouvé ou non visible' });
         const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
         const experiences = await experience.find({ cvId: cvDoc._id });
         const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level_name: lang.id_level.name }));
@@ -124,32 +124,32 @@ const deleteCV = async (req, res) => {
 };
 
 const search = async (req, res) => {
-    try{
-    let connect = false;
-    if (req?.user && req?.user._id) connect = true;
-    let searchTerm = req.params.term;
-    const cvs = await cv.find().populate('job_type_id').populate({ path: 'user_id', select: '-password' });
-    const formattedCVs = await Promise.all(cvs
-        .filter(cvDoc => 
-            cvDoc.user_id.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            cvDoc.user_id.lastname.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .map(async cvDoc => {
-        const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
-        const experiences = await experience.find({ cvId: cvDoc._id });
-        const like = connect ? await cv_user.findOne({ id_cv: cvDoc._id, id_user: req.user._id }) : {};
-        const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level: lang.id_level.name }));
-        const usersRecommandation = await allRecommandationsFromCv(cvDoc._id);
-        const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
-        return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like, usersRecommandation: usersRecommandation };
-        // return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like};
-    }));
-    res.status(200).json(formattedCVs);
+    try {
+        let connect = false;
+        if (req?.user && req?.user._id) connect = true;
+        let searchTerm = req.params.term;
+        const cvs = await cv.find({ visibility: true }).populate('job_type_id').populate({ path: 'user_id', select: '-password' });
+        const formattedCVs = await Promise.all(cvs
+            .filter(cvDoc => 
+                cvDoc.user_id.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                cvDoc.user_id.lastname.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map(async cvDoc => {
+                const languages = await cv_language.find({ id_cv: cvDoc._id }).populate('id_level').populate('id_language');
+                const experiences = await experience.find({ cvId: cvDoc._id });
+                const like = connect ? await cv_user.findOne({ id_cv: cvDoc._id, id_user: req.user._id }) : {};
+                const formattedLanguages = languages.map(lang => ({ name: lang.id_language.name, level: lang.id_level.name }));
+                const usersRecommandation = await allRecommandationsFromCv(cvDoc._id);
+                const formattedExperiences = experiences.map(exp => ({ type: exp.type, name: exp.name, beginning: exp.beginning, end: exp.end, current: exp.current, structureName: exp.structureName, description: exp.description }));
+                return { ...cvDoc.toObject(), languages: formattedLanguages, experiences: formattedExperiences, recommandation: like, usersRecommandation: usersRecommandation };
+            })
+        );
+        res.status(200).json(formattedCVs);
     } catch (error) {
         console.error('Erreur détaillée:', error);
         res.status(500).json({ message: 'Erreur lors de la recherche des CV', error });
         throw error;
     }
-}
+};
 
 module.exports = { createCV, getCVs, getCVById, updateCV, deleteCV, search };

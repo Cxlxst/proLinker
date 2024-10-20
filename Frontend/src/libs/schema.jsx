@@ -33,4 +33,5 @@ export const SchemaCv = Yup.object().shape({
             description: Yup.string(),
         })
     ),
+    visibility: Yup.boolean()
 });
