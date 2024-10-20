@@ -17,7 +17,8 @@
 							"script": {
 								"exec": [
 									"const jsonData = pm.response.json();\r",
-									"pm.collectionVariables.set(\"bearer\", jsonData.token);"
+									"pm.collectionVariables.set(\"bearer\", jsonData.token);\r",
+									"pm.collectionVariables.set(\"user_id\", jsonData._id);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -34,7 +35,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"firstname\": \"Nathan\", \"lastname\": \"Samochval\", \"email\": \"nathan@example.com\", \"password\": \"password123\", \"phone\": \"0123456789\", \"birthdate\": \"2003-11-02\"}"
+							"raw": "{\"firstname\": \"Nathan\", \"lastname\": \"Samochval\", \"email\": \"samochval.nathan@gmail.com\", \"password\": \"password123\", \"phone\": \"0781214913\", \"birthdate\": \"2003-11-02\", \"profil_shrek_character\": 0}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/api/auth/register",
@@ -60,7 +61,8 @@
 							"script": {
 								"exec": [
 									"const jsonData = pm.response.json();\r",
-									"pm.collectionVariables.set(\"bearer\", jsonData.token);"
+									"pm.collectionVariables.set(\"bearer\", jsonData.token);\r",
+									"pm.collectionVariables.set(\"user_id\", jsonData._id);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -77,7 +79,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"email\": \"nathan@example.com\", \"password\": \"password123\"}"
+							"raw": "{\"email\": \"samochval.nathan@gmail.com\", \"password\": \"password123\"}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/api/auth/login",
@@ -96,7 +98,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Users",
+					"name": "Get All Users",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -115,6 +117,32 @@
 							"path": [
 								"api",
 								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{bearer}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/users/samochval.nathan@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"samochval.nathan@gmail.com"
 							]
 						}
 					},
@@ -176,12 +204,7 @@
 					"name": "Get CVs",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{bearer}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "http://localhost:5000/api/cvs",
 							"protocol": "http",
@@ -222,7 +245,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "{{id_cv}}"
+									"value": "{{user_id}}"
 								}
 							]
 						}
@@ -520,7 +543,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/api/cv_languages",
+							"raw": "http://localhost:5000/api/languages",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -528,7 +551,7 @@
 							"port": "5000",
 							"path": [
 								"api",
-								"cv_languages"
+								"languages"
 							]
 						}
 					},
@@ -593,6 +616,11 @@
 		{
 			"key": "id_cv",
 			"value": "YOUR-ID-CV-HERE",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "YOUR-USER-ID-HERE",
 			"type": "string"
 		}
 	]

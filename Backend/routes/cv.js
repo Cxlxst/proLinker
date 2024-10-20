@@ -36,8 +36,22 @@ router.get('/', getCVs);
  *                     type: string
  *                     description: ID du type de job
  *                   user_id:
- *                     type: string
- *                     description: ID de l'utilisateur ayant créé le CV
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       firstname:
+ *                         type: string
+ *                       lastname:
+ *                         type: string
+ *                       email:
+ *                         type: string
+ *                       phone:
+ *                         type: string
+ *                       birthdate:
+ *                         type: string
+ *                       profil_shrek_character:
+ *                         type: number
  *                   languages:
  *                     type: array
  *                     items:
@@ -98,8 +112,22 @@ router.get('/connect', protect, getCVs);
  *                     type: string
  *                     description: ID du type de job
  *                   user_id:
- *                     type: string
- *                     description: ID de l'utilisateur ayant créé le CV
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       firstname:
+ *                         type: string
+ *                       lastname:
+ *                         type: string
+ *                       email:
+ *                         type: string
+ *                       phone:
+ *                         type: string
+ *                       birthdate:
+ *                         type: string
+ *                       profil_shrek_character:
+ *                         type: number
  *                   languages:
  *                     type: array
  *                     items:
@@ -195,7 +223,7 @@ router.get('/:id', getCVById);
  * @swagger
  * /api/cvs/{id}:
  *   get:
- *     summary: Récupère un CV par ID
+ *     summary: Récupère un CV par user_ID
  *     tags: [CVs]
  *     parameters:
  *       - in: path
@@ -203,7 +231,7 @@ router.get('/:id', getCVById);
  *         schema:
  *           type: string
  *         required: true
- *         description: ID du CV
+ *         description: user_ID du CV
  *     responses:
  *       200:
  *         description: CV récupéré avec succès

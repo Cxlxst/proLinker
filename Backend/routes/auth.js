@@ -50,6 +50,10 @@ router.post('/register', createUser);
  *                 format: date
  *                 description: Date d'anniversaire
  *                 example: "1990-01-01"
+ *               profil_shrek_character:
+ *                 type: integer
+ *                 description: Photo de profile
+ *                 example: 0
  *     responses:
  *       201:
  *         description: utilisateur crée
@@ -74,6 +78,14 @@ router.post('/register', createUser);
  *                   type: string
  *                   description: JWT token
  *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *                 ProfilePicture:
+ *                   type: integer
+ *                   description: Photo de profile
+ *                   example: 0
+ *                 hasCV:
+ *                   type: boolean
+ *                   description: A t'il un cv
+ *                   example: false
  *       400:
  *         description: Champs manquants ou utilisateur déjà existant
  *       500:
@@ -129,6 +141,14 @@ router.post('/login', loginUser);
  *                   type: string
  *                   description: JWT token
  *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *                 ProfilePicture:
+ *                   type: integer
+ *                   description: Photo de profile
+ *                   example: 0
+ *                 hasCV:
+ *                   type: boolean
+ *                   description: A t'il un cv
+ *                   example: false
  *       400:
  *         description: Identifiants invalides
  *       401:
