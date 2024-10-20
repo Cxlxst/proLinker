@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react";
 import { Logo, LogoIcon, Sidebar, SidebarBody, SidebarLink } from "./components/ui/sidebar";
 import { IconSettings, IconUserBolt, IconHome, IconLogout, IconFileCv, IconListSearch } from "@tabler/icons-react";
 import ProtectedRoute from './context/protectedRoute';
-import { UserContext } from './context/userContext.jsx';
+import { UserContext } from './context/UserContext.jsx';
 import { cn } from "./libs/utils";
 import './App.css';
 

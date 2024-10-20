@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { UserContext } from '../context/userContext.jsx';
+import { UserContext } from '../context/UserContext.jsx';
 import InfoInput from "../components/InfoInput";
 import { axiosRequest, profilePictures } from '../libs/apiUtils.jsx';
 

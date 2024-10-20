@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Formik, Form } from 'formik';
-import { UserContext } from '../context/userContext.jsx';
+import { UserContext } from '../context/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import FieldArraySection from '../components/cv/FieldArraySection';
 import SkillsSection from '../components/cv/SkillsSection';

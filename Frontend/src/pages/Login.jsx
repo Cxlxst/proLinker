@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { UserContext } from '../context/userContext.jsx';
+import { UserContext } from '../context/UserContext.jsx';
 import InfoInput from "../components/InfoInput";
 
 export default function Login() {
