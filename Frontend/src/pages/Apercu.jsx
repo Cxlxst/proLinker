@@ -13,7 +13,7 @@ export default function CVDetails() {
     const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        axiosRequest({ method: "GET", url: `${apiUrl}/api/cvs/${id}`, setStateFunction: setCv });
+        axiosRequest({ method: "GET", url: `${apiUrl}/api/cvs/${id}`, headers: { Authorization: `Bearer ${user.token}` }, setStateFunction: setCv });
     }, [id]);
 
     if (!cv) {
@@ -24,7 +24,6 @@ export default function CVDetails() {
 
     return (
         <div className="w-full h-full bg-[#151515] text-white p-8 flex flex-col items-center overflow-y-auto">
-            {/* Header section with profile picture and basic info */}
             <div className="flex w-full justify-between mb-8 bg-[#1c1c1c] p-6 rounded-lg shadow-lg">
                 <div className="flex items-center">
                     <img 
@@ -42,10 +41,7 @@ export default function CVDetails() {
                     <img src={arrow} alt="Retour" className="w-6 h-6" />
                 </button>
             </div>
-
-            {/* Main CV content */}
             <div className="w-full max-w-4xl bg-[#1c1c1c] p-6 rounded-lg shadow-lg space-y-8 max-h-[70vh] overflow-y-auto">
-                {/* Hard Skills */}
                 <div>
                     <h2 className="text-2xl font-semibold">Compétences Techniques (Hard Skills)</h2>
                     <div className="flex flex-wrap gap-2 mt-4">
@@ -54,8 +50,6 @@ export default function CVDetails() {
                         ))}
                     </div>
                 </div>
-
-                {/* Soft Skills */}
                 <div>
                     <h2 className="text-2xl font-semibold">Compétences Personnelles (Soft Skills)</h2>
                     <div className="flex flex-wrap gap-2 mt-4">
@@ -64,8 +58,6 @@ export default function CVDetails() {
                         ))}
                     </div>
                 </div>
-
-                {/* Experiences */}
                 <div>
                     <h2 className="text-2xl font-semibold">Expériences Professionnelles</h2>
                     <div className="space-y-4 mt-4">
@@ -78,8 +70,6 @@ export default function CVDetails() {
                         ))}
                     </div>
                 </div>
-
-                {/* Formations */}
                 <div>
                     <h2 className="text-2xl font-semibold">Formations</h2>
                     <div className="space-y-4 mt-4">
@@ -92,8 +82,6 @@ export default function CVDetails() {
                         ))}
                     </div>
                 </div>
-
-                {/* Language Skills (if any) */}
                 {cv.languages && (
                     <div>
                         <h2 className="text-2xl font-semibold">Compétences Linguistiques</h2>
@@ -104,8 +92,6 @@ export default function CVDetails() {
                         </div>
                     </div>
                 )}
-
-                {/* Contact Info */}
                 <h2 className="text-2xl font-semibold">Contact</h2>
                 <div className="bg-[#151515] p-4 rounded-lg" style={{ boxShadow: 'inset 0 0 10px 2px #F86F18', marginTop: '15px' }}>
                     <p><strong>Email :</strong> {cv.user_id.email}</p>

@@ -87,7 +87,7 @@ export default function AllCv() {
             </div>
 
             {/* CV Cards */}
-            <div className="flex flex-wrap justify-center gap-10 overflow-y-auto h-[80vh]"> {/* Added overflow here */}
+            <div className="flex flex-wrap justify-center gap-10 overflow-y-auto h-[80vh]">
                 {cvs.map((cv, index) => {
                     const age = calculateAge(cv.user_id.birthdate), isLiked = likedCvs[cv._id];
                     return (

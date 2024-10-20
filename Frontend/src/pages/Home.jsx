@@ -25,8 +25,6 @@ export default function Home() {
                     Chaque CV a une histoire à raconter.<br /> Aidez-le à trouver son auditoire sur <b>ProLinker</b>
                 </p>
             </div>
-
-            {/* Si l'utilisateur n'est pas connecté, afficher les boutons */}
             {!user ? (
                 <div className="absolute z-50 flex space-x-6 mt-12" style={{ top: '70%', left: '50%', transform: 'translate(-50%, -50%)' }}>
                     <button onClick={register} className="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
